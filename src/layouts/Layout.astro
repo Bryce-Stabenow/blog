@@ -3,9 +3,24 @@ import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
+  activeLink: string;
 }
 
+const sidebarLinks = [
+  { title: "Home", href: "/", active: Astro.props.activeLink === "Home" },
+  { title: "Blog", href: "/blog", active: Astro.props.activeLink === "Blog" },
+  {
+    title: "Things I Dig",
+    href: "/things-i-dig",
+    active: Astro.props.activeLink === "Things",
+  },
+];
+
 const { title } = Astro.props;
+const sideLinkClasses = "transition duration-100 ";
+const passiveLinkClasses = "hover:text-orange-600 text-white";
+const activeLinkClasses = "hover:text-white text-orange-600";
+
 import { Icon } from "astro-icon/components";
 import Headshot from "../assets/headshot.jpg";
 ---
@@ -44,15 +59,18 @@ import Headshot from "../assets/headshot.jpg";
           </div>
           <nav class="flex justify-center w-full">
             <ul class="text-xl font-bold">
-              <li class="hover:text-orange-600 transition duration-100">
-                <a href="/">Home</a>
-              </li>
-              <li class="hover:text-orange-600 transition duration-100 mt-2">
-                <a href="/blog">Blog</a>
-              </li>
-              <li class="hover:text-orange-600 transition duration-100 mt-2">
-                <a href="/things-i-dig">Things I Dig</a>
-              </li>
+              {
+                sidebarLinks.map((link) => (
+                  <li
+                    class={
+                      sideLinkClasses +
+                      (link.active ? activeLinkClasses : passiveLinkClasses)
+                    }
+                  >
+                    <a href={link.href}>{link.title}</a>
+                  </li>
+                ))
+              }
             </ul>
           </nav>
           <div class="w-full">
