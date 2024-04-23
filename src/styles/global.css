@@ -13,9 +13,8 @@ body {
       position: absolute;
       content: "";
       top: calc(-1 * var(--border-width));
-      left: calc(-1 * var(--border-width));
-      z-index: -1;
-      width: calc(100% + var(--border-width) * 2);
+      left: 0;
+      width: calc(var(--border-width) * 2);
       height: calc(
         100% + var(--border-width)
       ); /* Set this to * 2 if you want y-axis border */
