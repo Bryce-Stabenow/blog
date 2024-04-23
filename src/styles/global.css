@@ -1,0 +1,38 @@
+body {
+    font-family: "Reddit Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .gradient-border {
+    --border-width: 3px;
+    border-bottom: 0px;
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: "";
+      top: calc(-1 * var(--border-width));
+      left: calc(-1 * var(--border-width));
+      z-index: -1;
+      width: calc(100% + var(--border-width) * 2);
+      height: calc(
+        100% + var(--border-width)
+      ); /* Set this to * 2 if you want y-axis border */
+      background: linear-gradient(
+        240deg,
+        hsl(45, 100%, 70%),
+        hsl(17, 97%, 62%),
+        hsl(0, 95%, 66%)
+      );
+      background-size: 300% 300%;
+      background-position: 0 50%;
+      animation: moveGradient 4s alternate infinite;
+    }
+  }
+
+  @keyframes moveGradient {
+    50% {
+      background-position: 100% 50%;
+    }
+  }
