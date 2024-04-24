@@ -1,8 +1,8 @@
 ---
 title: 'My First Blog Post'
-pubDate: 2022-07-01
+pubDate: 2024-07-01
 description: 'This is the first post of my new Astro blog.'
-author: 'Astro Learner'
+author: 'Bryce Stabenow'
 image:
     url: '../../assets/favicon-max.jpg'
     alt: 'The full Astro logo.'
