@@ -22,26 +22,30 @@ const allPosts = await getCollection("blogs");
 
   <div class="mt-24">
     <h2 class="text-xl font-extrabold mb-4">Recent Blog Articles:</h2>
-    <!-- TODO limit to 4 blogs -->
-    {
-      allPosts.map((post) => (
-        <a href={`/blog/${post.slug}`}>
-          <div class="h-[200px] min-h-[200px] max-h-[200px] p-2 rounded-lg transition duration-100 flex grayscale hover:grayscale-0 hover:bg-zinc-600">
-            <figure class="flex w-1/2 items-center justify-center h-full">
-              <Image
-                src={post.data.image.url}
-                alt={post.data.image.alt}
-                class="max-h-full max-w-full rounded-lg object-cover"
-              />
-            </figure>
-            <div class="flex flex-col justify-center items-end p-4 pr-0 w-1/2">
-              <h3 class="text-3xl font-bold">{post.data.title}</h3>
-              <p>{post.data.pubDate.toDateString()}</p>
-            </div>
-          </div>
-        </a>
-      ))
-    }
+    <ul class="flex flex-col space-y-6">
+      {
+        allPosts.slice(0, 3).map((post) => (
+          <li>
+            <a
+              href={`/blog/${post.slug}`}
+              class="h-[200px] min-h-[200px] max-h-[200px] p-2 rounded-lg transition duration-100 flex grayscale hover:grayscale-0 hover:bg-zinc-600"
+            >
+              <figure class="flex w-1/2 items-center justify-center h-full">
+                <Image
+                  src={post.data.image.url}
+                  alt={post.data.image.alt}
+                  class="max-h-full max-w-full rounded-lg object-cover"
+                />
+              </figure>
+              <div class="flex flex-col justify-center items-end p-4 pr-0 w-1/2">
+                <h3 class="text-3xl font-bold">{post.data.title}</h3>
+                <p>{post.data.pubDate.toDateString()}</p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
     <a
       href="/blog"
       class="transition duration-100 mt-4 block w-full text-center hover:text-orange-600"
