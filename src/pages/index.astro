@@ -1,5 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Headshot from "../assets/headshot.jpg";
 ---
 
-<Layout title="Bryce Stabenow" activeLink="Home" />
+<Layout title="Bryce Stabenow" activeLink="Home">
+  <img
+    src={Headshot.src}
+    class="rounded-full w-28 h-28 mb-4"
+    alt="A headshot image of me, Bryce Stabenow"
+  />
+  <p>
+    Hey, I'm <strong>Bryce</strong>, a software developer from St. Louis, MO.
+  </p>
+</Layout>

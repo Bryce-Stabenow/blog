@@ -28,7 +28,7 @@ const passiveLinkClasses = "hover:text-orange-600 text-white";
 const activeLinkClasses = "text-orange-600";
 
 import { Icon } from "astro-icon/components";
-import Headshot from "../assets/headshot.jpg";
+import logo from "../assets/orange-blob-s.png";
 ---
 
 <!doctype html>
@@ -37,7 +37,7 @@ import Headshot from "../assets/headshot.jpg";
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+    <link rel="icon" type="image/jpeg" href="/favicon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
 
@@ -60,32 +60,24 @@ import Headshot from "../assets/headshot.jpg";
           class="max-h-[850px] h-full min-w-[270px] max-w-[270px] py-12 px-6 flex flex-col justify-between items-end text-white"
         >
           <div class="flex flex-col items-center w-full">
-            <img
-              src={Headshot.src}
-              class="rounded-full w-28 h-28 mb-4"
-              alt="A headshot image of me, Bryce Stabenow"
-            />
-            <p>
-              Hey, I'm <strong>Bryce</strong>, a software developer from St.
-              Louis, MO.
-            </p>
+            <!-- <img src={logo.src} class="w-12 h-12 mb-8" /> -->
+            <nav class="flex justify-center w-full">
+              <ul class="text-xl font-bold">
+                {
+                  sidebarLinks.map((link) => (
+                    <li
+                      class={
+                        sideLinkClasses +
+                        (link.active ? activeLinkClasses : passiveLinkClasses)
+                      }
+                    >
+                      <a href={link.href}>{link.title}</a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </nav>
           </div>
-          <nav class="flex justify-center w-full">
-            <ul class="text-xl font-bold">
-              {
-                sidebarLinks.map((link) => (
-                  <li
-                    class={
-                      sideLinkClasses +
-                      (link.active ? activeLinkClasses : passiveLinkClasses)
-                    }
-                  >
-                    <a href={link.href}>{link.title}</a>
-                  </li>
-                ))
-              }
-            </ul>
-          </nav>
           <div class="w-full">
             <div class="flex flex-row justify-center">
               <a href="https://x.com/BryceStabenow" target="_blank">
