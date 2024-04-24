@@ -23,12 +23,11 @@ const sidebarLinks = [
 ];
 
 const { title } = Astro.props;
-const sideLinkClasses = "transition duration-100 ";
+const sideLinkClasses = "mb-2 transition duration-100 ";
 const passiveLinkClasses = "hover:text-orange-600 text-white";
 const activeLinkClasses = "text-orange-600";
 
 import { Icon } from "astro-icon/components";
-import logo from "../assets/orange-blob-s.png";
 ---
 
 <!doctype html>
@@ -60,7 +59,6 @@ import logo from "../assets/orange-blob-s.png";
           class="max-h-[850px] h-full min-w-[270px] max-w-[270px] py-12 px-6 flex flex-col justify-between items-end text-white"
         >
           <div class="flex flex-col items-center w-full">
-            <!-- <img src={logo.src} class="w-12 h-12 mb-8" /> -->
             <nav class="flex justify-center w-full">
               <ul class="text-xl font-bold">
                 {
@@ -100,9 +98,11 @@ import logo from "../assets/orange-blob-s.png";
         </div>
       </div>
 
-      <section class="bg-zinc-700 w-full min-h-screen py-12 px-6 text-white">
-        <slot />
-      </section>
+      <div class="bg-zinc-700 w-full min-h-screen py-12 px-6 text-white">
+        <section class="max-w-3xl mx-auto">
+          <slot />
+        </section>
+      </div>
     </main>
   </body>
 </html>
