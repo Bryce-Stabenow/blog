@@ -1,6 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Headshot from "../assets/headshot.jpg";
+import CCC from "../assets/CCC.png";
+import pdcare from "../assets/pdcareconnection.png";
+import lofi from "../assets/lofi.png";
+import VLP from "../assets/VLP.png";
 
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
@@ -16,8 +20,10 @@ const allPosts = await getCollection("blogs");
       alt="A headshot image of me, Bryce Stabenow"
     />
     <h1 class="text-lg">
-      Hey, I'm <strong>Bryce</strong>, a software developer from St. Louis, MO.
+      I'm <strong>Bryce Stabenow</strong>, a software developer from St. Louis,
+      MO.
     </h1>
+    <p>I'm</p>
   </div>
 
   <div class="mt-16">
@@ -28,7 +34,7 @@ const allPosts = await getCollection("blogs");
           <li>
             <a
               href={`/blog/${post.slug}`}
-              class="h-[200px] min-h-[200px] max-h-[200px] p-2 rounded-lg transition duration-100 flex grayscale hover:grayscale-0 hover:bg-zinc-600"
+              class="h-[150px] min-h-[150px] max-h-[150px] p-2 rounded-lg transition duration-100 flex grayscale hover:grayscale-0 hover:bg-zinc-600"
             >
               <figure class="flex w-1/2 items-center justify-center h-full">
                 <Image
@@ -53,7 +59,41 @@ const allPosts = await getCollection("blogs");
     >
   </div>
 
-  <div class="mt-12">
-    <h2 class="text-xl font-extrabold mb-4">Some Projects of Mine:</h2>
+  <div class="mt-24">
+    <h2 class="text-xl font-extrabold mb-4">Recent Client Projects:</h2>
+    <div class="masonry">
+      <div class="grid">
+        <img src={VLP.src} />
+        <div class="body">
+          <div class="relative">
+            <a class="link" target="_blank" href="/"></a>
+          </div>
+        </div>
+      </div>
+      <div class="grid">
+        <img src={lofi.src} />
+        <div class="body">
+          <div class="relative">
+            <a class="link" target="_blank" href="/"></a>
+          </div>
+        </div>
+      </div>
+      <div class="grid">
+        <img src={pdcare.src} />
+        <div class="body">
+          <div class="relative">
+            <a class="link" target="_blank" href="/"></a>
+          </div>
+        </div>
+      </div>
+      <div class="grid">
+        <img src={CCC.src} />
+        <div class="body">
+          <div class="relative">
+            <a class="link" target="_blank" href="/"></a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </Layout>
