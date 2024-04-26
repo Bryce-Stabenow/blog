@@ -88,6 +88,12 @@ body {
     }
   }
 
+    .gradient-border.fill-bg{
+      &::after{
+        width: 100%;
+      }
+    }
+
   @keyframes moveGradient {
     50% {
       background-position: 100% 50%;
