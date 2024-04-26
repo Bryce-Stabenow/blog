@@ -8,6 +8,7 @@ import VLP from "../assets/VLP.png";
 
 import { getCollection } from "astro:content";
 import BlogCard from "../components/blog-card.astro";
+import Header from "../components/header.astro";
 
 const allPosts = await getCollection("blogs");
 ---
@@ -19,14 +20,13 @@ const allPosts = await getCollection("blogs");
       class="rounded-full w-28 h-28 mb-4"
       alt="A headshot image of me, Bryce Stabenow"
     />
-    <h1 class="text-lg text-center">
-      I'm <strong>Bryce Stabenow</strong>, a software developer
-      <br class="lg:hidden" />
-      from St. Louis, MO.
+    <h1 class="text-xl text-center" style="text-wrap: balence;">
+      I'm <strong>Bryce Stabenow</strong>, a software developer <br />from St.
+      Louis, MO.
     </h1>
     <p class="mt-2">
       Most of the time you'll find me in front of a pile of code or reading up
-      on the latest news. I'm a serious nerd, a music fanatic, and a writer.
+      on the latest news. I'm also a movie lover, a music fanatic, and a writer.
     </p>
   </div>
 
