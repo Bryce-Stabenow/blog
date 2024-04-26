@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import "../../styles/markdown.css";
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("blogs");
@@ -15,7 +16,7 @@ const { Content } = await entry.render();
 ---
 
 <Layout title={entry.data.title} activeLink="Blog">
-  <article>
+  <article class="markdown">
     <Content />
   </article>
 </Layout>

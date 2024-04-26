@@ -1,0 +1,86 @@
+  .markdown h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+  }
+
+  .markdown h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+  }
+
+  .markdown h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .markdown p {
+    min-height: 12px;
+  }
+
+  .markdown a {
+    color: rgb(37 99 235);
+  }
+
+  .markdown img {
+    max-width: 50%;
+    margin: 0 auto;
+  }
+
+  .markdown blockquote {
+    color: rgb(80, 80, 80);
+    border-left: 5px solid rgb(230, 230, 230);
+    padding-left: 10px;
+  }
+
+  .markdown blockquote {
+    color: rgb(200, 200, 200);
+  }
+
+  .markdown ul,
+  .markdown ol {
+    margin-left: 15px;
+    list-style-position: inside;
+  }
+
+  .markdown ul ul,
+  .markdown ol ul {
+    list-style-type: circle;
+    list-style-position: inside;
+    margin-left: 15px;
+  }
+
+  .markdown ol ol,
+  .markdown ul ol {
+    list-style-type: lower-latin;
+    list-style-position: inside;
+    margin-left: 15px;
+  }
+
+  .markdown ul {
+    list-style: disc;
+  }
+
+  .markdown ol {
+    list-style: decimal;
+  }
+   .markdown li {
+    margin-top: 8px;
+   }
+
+  .markdown hr {
+    margin: 20px 0;
+  }
+  .markdown table {
+    width: 100%;
+  }
+
+  .markdown th,
+  .markdown td {
+    border: 1px solid rgb(180, 180, 180);
+    padding: 4px;
+  }
+
+  .markdown th {
+    background-color: rgb(220, 220, 220);
+    text-align: left;
+  }

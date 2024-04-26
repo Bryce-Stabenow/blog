@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/header.astro";
+import "../styles/markdown.css";
 ---
 
 <Layout title="Things I Dig" activeLink="Things">
@@ -8,4 +9,87 @@ import Header from "../components/header.astro";
     title="Things I Dig"
     subtitle="My work setup, favorite music, movies, and more"
   />
+
+  <p class="my-12">
+    As a way to kind of share and collect things that I really enjoy, I've
+    decided to put some of them together here. There's no affiliate links or any
+    funny business, just a man trying to share some joy with others. If you do
+    find something here that ends up bringing some joy to your life, shoot me a
+    message on Twitter!
+  </p>
+
+  <ul class="markdown">
+    <li>
+      <h2>Work/Personal Setup</h2>
+      <ul>
+        <li>
+          <span class="font-bold">Dell XPS 13 - Ubuntu 20.04</span>
+          <p>
+            Daily driver for work. Works great and runs my approximately 10,000
+            docker containers without a sweat. Only drawback is the tiny screen
+            on this thing which makes it pretty much unusuable without external
+            mointors. I have two 4k 28" LG monitors which it drives over a
+            single USB-C--crazy to think about how far that tech has come!
+          </p>
+        </li>
+        <li>
+          <span class="font-bold">MacBook 14" M3 Pro</span>
+          <p>
+            This is what I use for my personal work, and the thing is a beast.
+            Keyboard seems nicely improved from previous MacBooks as well which
+            was the another I opted for it instead of a modular Linux laptop
+          </p>
+        </li>
+      </ul>
+    </li>
+    <li class="!mt-12">
+      <h2>Tech</h2>
+      <ul>
+        <li>Google Buds</li>
+      </ul>
+    </li>
+    <li class="!mt-12">
+      <h2>Movies</h2>
+      <ul>
+        <li>Once Upon A Time In Hollywood</li>
+        <li>Everything, Everywhere, All At Once</li>
+        <li>Dune 1 & 2</li>
+        <li>Lord of the Rings Trilogy</li>
+        <li>Wish I Was Here</li>
+        <li>Space Balls</li>
+      </ul>
+    </li>
+    <li class="!mt-12">
+      <h2>Music</h2>
+      <ul>
+        <li>Hippo Campus</li>
+        <li>The Wrecks</li>
+        <li>Young the Giant</li>
+        <li>J. Cole</li>
+        <li>Kendrick Lamar</li>
+        <li>Cage the Elephant</li>
+        <li>Bon Iver</li>
+        <li>Otis Redding</li>
+        <li>Marvin Gaye</li>
+        <li>Neutral Milk Hotel</li>
+        <li>Pink Floyd</li>
+        <li>The Districts</li>
+      </ul>
+    </li>
+    <li class="!mt-12">
+      <h2>Books</h2>
+      <ul>
+        <li>A Brave New World - Aldous Huxley</li>
+        <li>Infinite Jest - David Foster Wallace</li>
+        <li>The Hobbit - J.R.R. Tolkien</li>
+        <li>Cat's Cradle - Kurt Vonnegut</li>
+        <li>Catch 22</li>
+        <li>Invisible Man</li>
+        <li>East of Eden</li>
+        <li>Go Tell It On The Mountain</li>
+        <li>Frakenstein</li>
+        <li>A Man Called Ove</li>
+      </ul>
+    </li>
+  </ul>
 </Layout>
