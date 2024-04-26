@@ -1,10 +1,21 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
+import BlogCard from "../../components/blog-card.astro";
 
 const allPosts = await getCollection("blogs");
 ---
 
 <Layout title="The Blog" activeLink="Blog">
-  {allPosts.map((post) => <a href={`/blog/${post.slug}`}>{post.data.title}</a>)}
+  <div>
+    <h1 class="text-4xl font-extrabold text-center">The Blog</h1>
+    <p class="mt-2 text-center block">
+      All of my ramblings and thoughts in one place
+    </p>
+  </div>
+  <div class="mt-16">
+    <ul class="flex flex-col space-y-6">
+      {allPosts.map((post) => <BlogCard post={post} />)}
+    </ul>
+  </div>
 </Layout>

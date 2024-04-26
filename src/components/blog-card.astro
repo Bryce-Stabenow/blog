@@ -1,0 +1,28 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  post: any;
+}
+
+const { post } = Astro.props;
+---
+
+<li>
+  <a
+    href={`/blog/${post.slug}`}
+    class="h-[150px] min-h-[150px] max-h-[150px] p-2 rounded-lg transition duration-100 flex grayscale hover:grayscale-0 hover:bg-zinc-600"
+  >
+    <figure class="flex w-1/2 items-center justify-center h-full">
+      <Image
+        src={post.data.image.url}
+        alt={post.data.image.alt}
+        class="max-h-full max-w-full rounded-lg object-cover"
+      />
+    </figure>
+    <div class="flex flex-col justify-center items-end p-4 pr-0 w-1/2">
+      <h3 class="text-3xl font-bold">{post.data.title}</h3>
+      <p>{post.data.pubDate.toDateString()}</p>
+    </div>
+  </a>
+</li>
