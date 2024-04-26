@@ -38,7 +38,7 @@ const allPosts = await getCollection("blogs");
         >Read&nbsp;More&nbsp;&rarr;</a
       >
     </div>
-    <ul class="flex flex-col space-y-6">
+    <ul class="flex flex-col space-y-2 md:space-y-6">
       {allPosts.slice(0, 3).map((post) => <BlogCard post={post} />)}
     </ul>
   </div>
