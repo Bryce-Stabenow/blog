@@ -142,9 +142,12 @@ import { Icon } from "astro-icon/components";
         }
       }
 
-      document
-        .getElementById("topNavToggle")
-        ?.addEventListener("click", toggleMenu);
+      // Need to make sure that Astro refreshes this when re-rendering on a new page
+      document.addEventListener("astro:page-load", () => {
+        document
+          .getElementById("topNavToggle")
+          ?.addEventListener("click", toggleMenu);
+      });
     </script>
   </body>
 </html>
