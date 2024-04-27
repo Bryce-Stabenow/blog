@@ -114,6 +114,7 @@ import { Icon } from "astro-icon/components";
               <a
                 href="https://www.linkedin.com/in/bryce-stabenow-dev/"
                 target="_blank"
+                aria-label="Link to my LinkedIn page"
               >
                 <Icon
                   name="mdi:linkedin"
@@ -125,6 +126,7 @@ import { Icon } from "astro-icon/components";
                 href="https://x.com/BryceStabenow"
                 target="_blank"
                 class="mx-2"
+                aria-label="Link to my Twitter/X Profile"
               >
                 <Icon
                   name="mdi:twitter"
@@ -132,7 +134,11 @@ import { Icon } from "astro-icon/components";
                   class="hover:text-orange-600 transition duration-100"
                 />
               </a>
-              <a href="https://github.com/Bryce-Stabenow" target="_blank">
+              <a
+                href="https://github.com/Bryce-Stabenow"
+                target="_blank"
+                aria-label="Link to my GitHub account"
+              >
                 <Icon
                   name="mdi:github"
                   size={36}

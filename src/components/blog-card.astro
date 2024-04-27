@@ -21,6 +21,7 @@ const { post } = Astro.props;
         alt={post.data.image.alt}
         width={550}
         class="max-h-full max-w-full rounded-lg object-cover"
+        loading="eager"
       />
     </figure>
     <div
