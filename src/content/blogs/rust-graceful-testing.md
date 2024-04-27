@@ -6,7 +6,7 @@ author: 'Bryce Stabenow'
 image:
     url: '../../assets/favicon-max.jpg'
     alt: 'The full Astro logo.'
-tags: ["tips", "testing", "rust"]
+tags: ["testing in rust", "unit testing tips", "rust testing", "panic during testing rust"]
 ---
 # Testing for Graceful Program Exits in Rust
 

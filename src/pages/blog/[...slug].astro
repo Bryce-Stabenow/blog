@@ -15,7 +15,12 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<Layout title={entry.data.title} activeLink="Blog">
+<Layout
+  title={entry.data.title}
+  activeLink="Blog"
+  description={entry.data.description}
+  keywords={entry.data.tags}
+>
   <article class="markdown">
     <Content />
   </article>

@@ -5,6 +5,8 @@ import "../styles/global.css";
 interface Props {
   title: string;
   activeLink: string;
+  description?: string;
+  keywords?: Array<string>;
 }
 
 const sidebarLinks = [
@@ -17,7 +19,7 @@ const sidebarLinks = [
   },
 ];
 
-const { title } = Astro.props;
+const { title, description, keywords } = Astro.props;
 const sideLinkClasses = "mb-8 md:mb-2 transition duration-100 ";
 const passiveLinkClasses = "hover:text-orange-600 text-white";
 const activeLinkClasses = "text-orange-600";
@@ -29,7 +31,16 @@ import { Icon } from "astro-icon/components";
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
+    <meta
+      name="description"
+      content={description ?? "The personal website of Bryce Stabenow"}
+    />
+    <meta
+      name="keywords"
+      content={keywords?.join(" ,") ??
+        "Bryce Stabenow, Bryce Stabenow software dev, web developer blog, coding blog"}
+    />
+
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/jpeg" href="/favicon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
