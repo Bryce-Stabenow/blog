@@ -19,6 +19,7 @@ const { post } = Astro.props;
       <Image
         src={post.data.image.url}
         alt={post.data.image.alt}
+        width={550}
         class="max-h-full max-w-full rounded-lg object-cover"
       />
     </figure>

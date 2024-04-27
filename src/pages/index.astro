@@ -6,6 +6,8 @@ import pdcare from "../assets/pdcareconnection.png";
 import lofi from "../assets/lofi.png";
 import VLP from "../assets/VLP.png";
 
+import { Image } from "astro:assets";
+
 import { getCollection } from "astro:content";
 import BlogCard from "../components/blog-card.astro";
 
@@ -14,10 +16,12 @@ const allPosts = await getCollection("blogs");
 
 <Layout title="Bryce Stabenow" activeLink="Home">
   <div class="flex flex-col items-center max-w-xl mx-auto">
-    <img
-      src={Headshot.src}
+    <Image
+      src={Headshot}
       class="rounded-full w-28 h-28 mb-4"
       alt="A headshot image of me, Bryce Stabenow"
+      width={224}
+      quality={"max"}
     />
     <h1 class="text-xl text-center" style="text-wrap: balence;">
       I'm <strong>Bryce Stabenow</strong>, a software developer <br />from St.
@@ -47,16 +51,32 @@ const allPosts = await getCollection("blogs");
     <h2 class="text-2xl font-extrabold mb-4">Recent Client Projects:</h2>
     <div class="masonry">
       <div class="grid">
-        <img src={VLP.src} />
+        <Image
+          src={VLP}
+          alt="A screenshot of VLP Skincare's website"
+          width={700}
+        />
       </div>
       <div class="grid">
-        <img src={lofi.src} />
+        <Image
+          src={lofi}
+          alt="A screenshot of LofiLift, a mobile workout application"
+          width={700}
+        />
       </div>
       <div class="grid">
-        <img src={pdcare.src} />
+        <Image
+          src={pdcare}
+          alt="A screenshot of PD Care Connection, a website for Parkinson's disease awareness"
+          width={700}
+        />
       </div>
       <div class="grid">
-        <img src={CCC.src} />
+        <Image
+          src={CCC}
+          alt="A screenshot of Cadence Coffee Co's website"
+          width={700}
+        />
       </div>
     </div>
   </div>

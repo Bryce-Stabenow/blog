@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/markdown.css";
+import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("blogs");
@@ -21,6 +22,15 @@ const { Content } = await entry.render();
   description={entry.data.description}
   keywords={entry.data.tags}
 >
+  <div class="flex mb-12 justify-center items-center">
+    <Image
+      src={entry.data.image.url}
+      alt={entry.data.image.alt}
+      width={678}
+      class="rounded-lg md:max-w-3/4 md:w-3/4 w-full max-w-full"
+    />
+  </div>
+
   <article class="markdown">
     <Content />
   </article>

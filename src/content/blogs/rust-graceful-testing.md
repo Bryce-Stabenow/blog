@@ -4,7 +4,7 @@ pubDate: 2024-04-27
 description: 'This post describes the best ways to approach testing code paths in Rust where you would normally fail gracefully'
 author: 'Bryce Stabenow'
 image:
-    url: '../../assets/favicon-max.jpg'
+    url: '../../assets/rocket.jpg'
     alt: 'The full Astro logo.'
 tags: ["testing in rust", "unit testing tips", "rust testing", "panic during testing rust"]
 ---
