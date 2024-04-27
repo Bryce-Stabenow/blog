@@ -1,16 +1,19 @@
   .markdown h1 {
     font-size: 2.25rem;
     font-weight: 800;
+    line-height: 2.5rem;
   }
 
   .markdown h2 {
     font-size: 1.75rem;
     font-weight: 800;
+    line-height: 2rem;
   }
 
   .markdown h3 {
     font-size: 1.5rem;
     font-weight: 800;
+    line-height: 1.75rem;
   }
 
   .markdown p {
@@ -83,4 +86,14 @@
   .markdown th {
     background-color: rgb(220, 220, 220);
     text-align: left;
+  }
+  
+  .markdown .expressive-code {
+    margin: 12px 0px;
+  }
+  
+  .markdown code{
+    background-color: rgb(39 39 42);
+    padding: 2px 4px;
+    font-family: monospace;
   }
