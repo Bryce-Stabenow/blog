@@ -7,7 +7,7 @@ import expressiveCode from "astro-expressive-code";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://bryce-stabenow.dev',
+  site: 'https://bryce-stabenow.com',
   integrations: [tailwind(), sitemap(), icon(), expressiveCode()],
   devToolbar: {
     enabled: false

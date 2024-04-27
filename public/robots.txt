@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bryce-stabenow.dev/sitemap-index.xml
+Sitemap: https://bryce-stabenow.com/sitemap-index.xml
