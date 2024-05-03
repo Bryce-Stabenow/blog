@@ -23,6 +23,10 @@
   .markdown a {
     color: rgb(234 88 12);
   }
+  
+  .markdown a:hover{
+    text-decoration: underline;
+  }
 
   .markdown img {
     max-width: 50%;
