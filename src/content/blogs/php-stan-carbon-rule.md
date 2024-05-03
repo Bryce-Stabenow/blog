@@ -5,7 +5,7 @@ description: 'A quick tutorial on how to create your own PHP Stan rules to help 
 author: 'Bryce Stabenow'
 image:
     url: '../../assets/static-analysis.jpg'
-    alt: 'A sunset which is silhouetting two elephants'
+    alt: 'A sunset, which is silhouetting two elephants'
 tags: ["testing", "unit testing tips", "static analysis", "php", "phpstan", "tooling"]
 ---
 # Creating Custom PHP Stan Rules For Your Codebase
@@ -14,7 +14,7 @@ tags: ["testing", "unit testing tips", "static analysis", "php", "phpstan", "too
 
 ## Static Analysis with PHP Stan
 
-One of the most helpful things you can do for codebase is introduce some _static analysis tools_. These are tools that look at your code not to determine runtime errors, but to check if it follow certain syntactical rules. Eslint, Rust-Analyzer, and even Typescript itself (to some degree) could be considered static analysis tools. Psalm and [PHP Stan](https://phpstan.org/) are the main choices for most Laravel/PHP applications.
+One of the most helpful things you can do for codebase is introduce _static analysis tools_. These are tools that look at your code not to determine runtime errors, but to check if it follows certain syntactical rules. Psalm and [PHP Stan](https://phpstan.org/) are the main choices for most Laravel/PHP applications, but you may also recognize Eslint, Rust-Analyzer, and even Typescript itself. First, let's see why this could be useful.
 
 <br />
 
@@ -25,7 +25,7 @@ One of the most helpful things you can do for codebase is introduce some _static
 We recently ran into this bug in our software when we reset a user's subscription information after their automatic renewal:
 ```php
 $subscriptionStart = Carbon::now();
-$subscriptionExpiration = Carbon::now()->addYear();
+$subscriptionExpiration = $subscriptionStart->addYear();
 
 /* other code */
 
@@ -34,11 +34,11 @@ $userSubscription->update([
     'expires_at'    => $subscriptionExpiration
 ]);
 ```
-It might look fine to your eyes, and unfortunately wasn't caught in the test since saving this would be successful. However, there's a nasty bug here. 
+It looks fine at first glance, and unfortunately wasn't caught in the tests that were written since it runs successfully. However, there's a nasty bug here. 
 
 <br/>
 
-**Carbon** is another common datetime package for PHP/Laravel projects, but has some quirks. One of these is that this instance is shared on your application. This means that our first call to `Carbon::now()` has accidentally been changed by the second line. 
+**Carbon** is a common datetime package for PHP/Laravel projects, but has some quirks--one of which is that it is mutable by default. This means that our first call to `Carbon::now()` has accidentally been changed by the second line instead of returning a new copy of the date.
 
 <br />
 
@@ -46,7 +46,7 @@ Carbon does have a way we can avoid this, which is just making sure that we use 
 ```php
 // No more bugs!
 $subscriptionStart = CarbonImmutable::now();
-$subscriptionExpiration = CarbonImmutable::now()->addYear();
+$subscriptionExpiration = $subscriptionStart->addYear();
 ```
 Okay, great! We've fixed the problem. But how can prevent this in the future ðŸ¤”?
 
@@ -56,26 +56,26 @@ Okay, great! We've fixed the problem. But how can prevent this in the future ðŸ¤
 
 ## Creating Custom PHP Stan Rules
 
-The strategy we decided to take, is to always use the `CarbonImmutable` class instead of the base `Carbon` class. PHP Stan is very cool in that it lets us create custom rules, provided that we know how to write them. Let's make a custom rule that will allow us to check that we only use the right class.
+The strategy we decided to take, is to always use the `CarbonImmutable` class instead of the base `Carbon` class. PHP Stan is extendable in that it lets us create custom rules, provided that we know how to write them. Let's make a custom rule that will allow us to check that we only use the right class.
 
 <br />
 
 ### Writing a Test File
 
-First things first, let's decide what we need to test. Inside of a folder, we'll create a new class that's violating this rule. This one is importing Carbon to use as the return value:
+First things first, let's decide what we need to test. We'll create a new file with a class that's violating this rule. Here, we import Carbon to use as the return value:
 ```php
 // tests/phpstan/no-carbon-imports.php
 
 use Carbon\Carbon;
 
 class Foo {
-    public function(): Carbon{
-        return now();
+    public function getTime(): Carbon{
+        return Carbon::now();
     }
 }
 
 ```
-We need to set up a couple more files here as well. We need the actual test itself, and we need to update the PHP Stan config file. Let's create our rule first:
+We need to set up a couple more files as well. We need the actual test itself, and we need to update the PHP Stan config file. Let's create our new rule first:
 ```php
 // App\Support\phpstan\NoCarbonImports.php
 namespace App\Support\phpstan;
@@ -109,7 +109,7 @@ rules:
 
 ### Analyzing the Syntax
 
-Great, now that we've got that finished, let's start checking the file. We can run the following command to analyze only our single file, which will dump all of the node information from our syntax parser. 
+Great, now let's start checking the file. We can run the following command to analyze only our Foo class, which will dump all of the node information from our syntax parser. 
 
 <br />
 
@@ -117,13 +117,13 @@ Great, now that we've got that finished, let's start checking the file. We can r
 
 <br />
 
-This will ouput the names of a lot of nodes and their types. Essentially, these static analysis tools focus not on the content of your code, but the structure, called an [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree). If you've ever written a compiler or transplier before, you'll recognize this concept. I find these small examples the easiest to understand by checking each part and trying to tie it to your code. Since ours should be the first line or two of our test file, we will eventually see the node of our AST that we want to use, a `PhpParser\Node\Stmt\UseUse::class`. Let's add that to our rule:
+This will output the names of the file's nodes and their types. Essentially, these static analysis tools focus on the structure of your code, using what's called an [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree). If you've written a compiler or transplier before, you'll recognize this concept. Ours should be the first line or two of our test file output, and we'll quickly see the node of our AST we want to use, a `PhpParser\Node\Stmt\UseUse::class`. Let's add that to our rule:
 ```php
 public function getNodeType(): string{
     return \PhpParser\Node\Stmt\UseUse::class;
 }
 ```
-Depending on what we need to see here, we might have to dig deeper into the node structure to find what we are looking for. In our case, we want to get the name of this node, and the select each part of the name of our import. In the next function, let's dump that:
+Depending on what we need to check, we might have to dig deeper into the node structure to find what we are looking for. For something like checking the return types of functions, it would be more complicated. In our case, we just want to get the name of this node and then look at each section of the name. Let's dump that and take a look:
 ```php
 public function processNode(Node\Expr|Node $node, Scope $scope): array{
     var_dump($node->name->parts); // ['Carbon', 'Carbon']
@@ -135,11 +135,11 @@ public function processNode(Node\Expr|Node $node, Scope $scope): array{
 
 ### Creating Our Rule
 
-Now we need to just write our rule. We want to check if we have an import from `Carbon` that is not using `CarbonImmutable`. If we have no errors, we return an empty array. If we do have errors, we need to return a `RuleErrorBuilder` which is part of PHP Stan.
+Now we need to write our rule. We want to check if we have an import from `Carbon` that is not using `CarbonImmutable`. If we have no errors, we return an empty array. If we do have errors, we need to return a `RuleErrorBuilder` which is part of PHP Stan.
 
 <br />
 
-Here's our finished rule!
+Here's what our finished rule looks like:
 ```php
 // App\Support\phpstan\NoCarbonImports.php
 namespace App\Support\phpstan;
@@ -158,7 +158,7 @@ class OnlyCarbonImmutableImports implements Rule {
         $importSections = $node->name?->parts ?? [];
         
         if(array_search('Carbon', $importSections, true) !== false &&
-            array_search('CarbonImmutable', $importSections, true) === false &&
+           array_search('CarbonImmutable', $importSections, true) === false
         ){
             return [
                 RuleErrorBuilder::message(
