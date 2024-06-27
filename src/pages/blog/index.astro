@@ -5,6 +5,9 @@ import BlogCard from "../../components/blog-card.astro";
 import Header from "../../components/header.astro";
 
 const allPosts = await getCollection("blogs");
+allPosts.sort((a, b) =>
+  a.data.pubDate.getTime() > b.data.pubDate.getTime() ? -1 : 1
+);
 ---
 
 <Layout title="The Blog" activeLink="Blog">

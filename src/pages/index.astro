@@ -12,6 +12,9 @@ import { getCollection } from "astro:content";
 import BlogCard from "../components/blog-card.astro";
 
 const allPosts = await getCollection("blogs");
+allPosts.sort((a, b) =>
+  a.data.pubDate.getTime() > b.data.pubDate.getTime() ? -1 : 1
+);
 ---
 
 <Layout title="Bryce Stabenow" activeLink="Home">
