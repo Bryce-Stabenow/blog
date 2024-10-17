@@ -34,4 +34,20 @@ const { Content } = await entry.render();
   <article class="markdown">
     <Content />
   </article>
+
+  <script>
+    function blankLinks() {
+      const links = document.querySelectorAll(".markdown a");
+      links.forEach((link) => {
+        link.setAttribute("target", "_blank");
+      });
+    }
+
+    // Need to make sure that Astro refreshes this when re-rendering on a new page
+    document.addEventListener("astro:after-swap", () => {
+      blankLinks();
+    });
+
+    blankLinks(); // Run on initial page load
+  </script>
 </Layout>
