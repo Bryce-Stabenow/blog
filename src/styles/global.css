@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 18px;
+}
+
 .masonry {
   columns: 2;
   column-gap: 16px;

@@ -1,11 +1,11 @@
 ---
-title: 'Your regex is bad, and you should feel bad'
+title: "Your regex is bad, and you should feel bad"
 pubDate: 2024-06-26
-description: 'Why your regexes are terrible and how you can improve them'
-author: 'Bryce Stabenow'
+description: "Why your regexes are terrible and how you can improve them"
+author: "Bryce Stabenow"
 image:
-    url: '../../assets/regex-meme.jpg'
-    alt: ''
+  url: "../../assets/regex-meme.jpg"
+  alt: ""
 tags: ["regex", "code smell", "refactoring", "best practices"]
 ---
 
@@ -28,13 +28,14 @@ It just so happened that this week, we had not one but _two_ different issues re
 Kevin Fang did a [recent Youtube video](https://www.youtube.com/watch?v=DDe-S3uef2w) about a problem that Cloudflare had with a regex of theirs. This caused a massive outage of internet services across the globe and cost billions of dollars in lost revenue. So, how come no one noticed? Let's have a little exercise and find out! Here's the regex in question:
 
 ```js
-/(?:(?:\"|'|\]|\}|\\|\d|(?:nan|infinity|true|false|null|undefined|symbol|math)|\`|\-|\+)+[)]*;?((?:\s|-|~|!|{}|\|\||\+)*.*(?:.*=.*)))/
+/(?:(?:\"|'|\]|\}|\\|\d|(?:nan|infinity|true|false|null|undefined|symbol|math)|\`|\-|\+)+[)]*;?((?:\s|-|~|!|{}|\|\||\+)*.*(?:.*=.*)))/;
 ```
+
 (sidenote: I was going to break this into two lines but I think it helps make my point even more if I don't)
 
 <br/>
 
-If you found the bug, congratulations, there's probably a spot for you at Cloudlfare. For those of us normies, the problem lies in the end section here `*(?:.*=.*)` This line would eventually lead to a backtracking regex that exploded the entire internet. But the regex isn't the real problem. Computers only do what we tell them to, so it's the programmer and the team that are responsible. With that in mind, we should discuss a few tips to solve your terrible regex problems and hopefully help your team as well:
+If you found the bug, congratulations, there's probably a spot for you at Cloudflare. For those of us normies, the problem lies in the end section here `*(?:.*=.*)` This line would eventually lead to a backtracking regex that exploded the entire internet. But the regex isn't the real problem. Computers only do what we tell them to, so it's the programmer and the team that are responsible. With that in mind, we should discuss a few tips to solve your terrible regex problems and hopefully help your team as well:
 
 <br/>
 
