@@ -31,7 +31,7 @@ It's cool. *Very* cool. In fact, to step back and consider how mind-bogglingly c
 
 <br/>
 
-It's easy to forget that CSS is one of the greatest achievements of the web. So many times it is reduced to "centering div hard" in memes and posts on the website formerly known as Twitter. But really... it's incredible. Breathtaking. And every one in a while, when you see an example of how layers upon layers of rendering and under-utilized features combine together into a beautiful conglomeration of artistic expression, it can be inspiring--and also make you consider just how shit you are at CSS.
+It's easy to forget that CSS is one of the greatest achievements of the web. So many times it is reduced to "centering div hard" in memes and posts on the website formerly known as Twitter. But really... it's incredible. Breathtaking. And every once in a while, when you see an example of how layers upon layers of rendering and under-utilized features combine together into a beautiful conglomeration of artistic expression, it can be inspiring--and also make you consider just how shit you are at CSS.
 
 <br/>
 <br/>
@@ -45,11 +45,11 @@ Those were the exact words I spoke to myself when looking at this example. *"Ah,
 
 <br/>
 
-The trick lies in an HTML feature that has been supported since **version 5 of Chrome, in 2010** ([not kidding, look it up](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/filter#see_also)), the humble svg `<filter>`. So, the question is, "How is that possible, when most of the web developers can't center a `<div>` but this man can render essentially a 3D model of text?"
+The trick lies in an HTML feature that has been supported since **version 5 of Chrome, in 2010** ([not kidding, look it up](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/filter#see_also)), the humble svg `<filter>`. So, the question is, "How is that possible, when most web developers can't center a `<div>`, but this man can render essentially a 3D model of text?"
 
 <br/>
 
-Now, there may be a myrid of complicated causes to that answer. However, I don't think long articles are any fun, so the answer is simple:
+Now, there may be a myriad of complicated causes to that answer. However, I don't think long articles are any fun, so the answer is simple:
 
 <br/>
 
