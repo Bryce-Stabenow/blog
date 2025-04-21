@@ -86,4 +86,8 @@ Instead, you should reconsider what you are using the regex for to begin with. I
 
 <br/>
 
-Good luck with your future regex issues!
+Good luck with your future regex issues.
+
+<br/>
+
+Until next time, peace.

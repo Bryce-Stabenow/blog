@@ -18,6 +18,8 @@
 
   .markdown p {
     min-height: 1rem;
+    font-size: 20px;
+    line-height: 32px;
   }
 
   .markdown a {
@@ -29,7 +31,7 @@
   }
 
   .markdown img {
-    max-width: 50%;
+    max-width: 75%;
     margin: 0 auto;
   }
 

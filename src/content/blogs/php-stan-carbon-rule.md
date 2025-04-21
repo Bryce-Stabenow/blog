@@ -197,3 +197,7 @@ Using static analysis tools to create these custom rules can be a fantastic way 
 <br />
 
 I also recommend spending some time writing a compiler. [I recently completed one in Rust](https://github.com/Bryce-Stabenow/rust-compiler-for-tiny-basic) if you'd like to check it out! It taught me a great deal about AST parsing and understanding how code syntax takes its shape. 
+
+<br/>
+
+Until next time, peace.

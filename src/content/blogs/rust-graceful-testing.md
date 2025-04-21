@@ -70,3 +70,7 @@ Now we can properly check in our test that it's failing where it should:
 ```
 
 Nice! Now we can test for a panic while making sure that we are keeping that code out of sight for users.
+
+<br/>
+
+Until next time, peace.

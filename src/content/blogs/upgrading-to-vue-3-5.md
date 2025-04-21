@@ -123,4 +123,8 @@ Evan You claims a 56% reduction in memory usage, and up to 10x performance in de
 
 <br>
 
-So, there you have it. Vue has some great new features available now for you to try out. I'll be posting again when we finish our adoption of Vue 3.5 at work and update everyone on the lessons learned there. Until next time!
+So, there you have it. Vue has some great new features available now for you to try out. I'll be posting again when we finish our adoption of Vue 3.5 at work and update everyone on the lessons learned there.
+
+<br/>
+
+Until next time, peace
