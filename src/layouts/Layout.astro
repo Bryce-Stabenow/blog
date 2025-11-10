@@ -160,10 +160,18 @@ import { Icon } from "astro-icon/components";
 
         if (sidebar !== null) {
           sidebar.classList.toggle("hidden");
+          document.body.classList.toggle("overflow-hidden");
         }
       }
 
       // Need to make sure that Astro refreshes this when re-rendering on a new page
+      // as well as when the page is loaded for the first time
+      document.addEventListener("astro:page-load", () => {
+        document
+          .getElementById("topNavToggle")
+          ?.addEventListener("click", toggleMenu);
+      });
+      
       document.addEventListener("astro:after-swap", () => {
         document
           .getElementById("topNavToggle")
