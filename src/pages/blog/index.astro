@@ -55,7 +55,8 @@ const categories = Array.from(allCategories).sort();
 
   <script is:inline define:vars={{ postsData: allPosts.map(p => ({ slug: p.slug, tags: p.data.tags })) }}>
     // Client-side filtering logic
-    document.addEventListener('DOMContentLoaded', () => {
+    // Use astro:page-load to support both initial load and view transitions
+    document.addEventListener('astro:page-load', () => {
       const filterButtons = document.querySelectorAll('.category-filter');
       const blogList = document.getElementById('blog-list');
       const filterCount = document.getElementById('filter-count');
