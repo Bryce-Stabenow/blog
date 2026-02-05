@@ -4,7 +4,7 @@ pubDate: 2024-10-16
 description: ""
 author: "Bryce Stabenow"
 image:
-  url: "../../assets/vue.jpg"
+  url: ""
   alt: ""
 tags: ["vue", "refactoring", "legacy applications", "web development"]
 ---
