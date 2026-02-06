@@ -8,6 +8,13 @@ const allPosts = await getCollection("blogs");
 allPosts.sort((a, b) =>
   a.data.pubDate.getTime() > b.data.pubDate.getTime() ? -1 : 1
 );
+
+// Extract all unique categories from tags
+const allCategories = new Set<string>();
+allPosts.forEach((post) => {
+  post.data.tags.forEach((tag) => allCategories.add(tag));
+});
+const categories = Array.from(allCategories).sort();
 ---
 
 <Layout title="The Blog" activeLink="Blog">
@@ -15,9 +22,108 @@ allPosts.sort((a, b) =>
     title="The Blog"
     subtitle="All of my ramblings and thoughts in one place"
   />
-  <div class="mt-16">
-    <ul class="flex flex-col space-y-6">
-      {allPosts.map((post) => <BlogCard post={post} />)}
+  
+  <!-- Category Filter -->
+  <div class="mt-8">
+    <div class="flex flex-wrap gap-2 items-center">
+      <span class="text-zinc-400 font-semibold">Filter by category:</span>
+      <button
+        data-category="all"
+        class="category-filter px-3 py-1 rounded-full text-sm transition duration-200 bg-zinc-700 text-white hover:bg-zinc-600"
+      >
+        All
+      </button>
+      {categories.map((category) => (
+        <button
+          data-category={category}
+          class="category-filter px-3 py-1 rounded-full text-sm transition duration-200 bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-white"
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+    <p id="filter-count" class="mt-4 text-zinc-400 text-sm"></p>
+  </div>
+
+  <div class="mt-8">
+    <ul id="blog-list" class="flex flex-col space-y-6">
+      {allPosts.map((post) => (
+        <BlogCard post={post} />
+      ))}
     </ul>
   </div>
+
+  <script is:inline define:vars={{ postsData: allPosts.map(p => ({ slug: p.slug, tags: p.data.tags })) }}>
+    // Client-side filtering logic
+    // Use astro:page-load to support both initial load and view transitions
+    document.addEventListener('astro:page-load', () => {
+      const filterButtons = document.querySelectorAll('.category-filter');
+      const blogList = document.getElementById('blog-list');
+      const filterCount = document.getElementById('filter-count');
+      let activeCategory = 'all';
+
+      // Get all blog posts elements
+      const blogPosts = Array.from(blogList?.querySelectorAll('li') || []);
+      const postsElements = blogPosts.map(post => {
+        const link = post.querySelector('a');
+        const href = link?.getAttribute('href') || '';
+        // Extract slug from href
+        const slug = href.replace('/blog/', '');
+        return { element: post, slug };
+      });
+
+      function updateFilterCount(count, total) {
+        if (!filterCount) return;
+        if (activeCategory === 'all') {
+          filterCount.textContent = `Showing all ${total} posts`;
+        } else {
+          filterCount.textContent = `Showing ${count} of ${total} posts`;
+        }
+      }
+
+      function filterPosts(category) {
+        activeCategory = category;
+        let visibleCount = 0;
+
+        postsElements.forEach(({ element, slug }) => {
+          const postData = postsData.find(p => p.slug === slug);
+          
+          if (category === 'all') {
+            element.style.display = '';
+            visibleCount++;
+          } else if (postData && postData.tags.includes(category)) {
+            element.style.display = '';
+            visibleCount++;
+          } else {
+            element.style.display = 'none';
+          }
+        });
+
+        updateFilterCount(visibleCount, postsElements.length);
+
+        // Update button styles
+        filterButtons.forEach(btn => {
+          const btnCategory = btn.getAttribute('data-category');
+          if (btnCategory === category) {
+            btn.classList.remove('bg-zinc-800', 'text-zinc-300');
+            btn.classList.add('bg-zinc-700', 'text-white');
+          } else {
+            btn.classList.remove('bg-zinc-700', 'text-white');
+            btn.classList.add('bg-zinc-800', 'text-zinc-300');
+          }
+        });
+      }
+
+      // Add click handlers to filter buttons
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const category = button.getAttribute('data-category') || 'all';
+          filterPosts(category);
+        });
+      });
+
+      // Initialize with all posts visible
+      updateFilterCount(postsElements.length, postsElements.length);
+    });
+  </script>
 </Layout>
