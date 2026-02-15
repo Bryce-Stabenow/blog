@@ -21,8 +21,8 @@ const sidebarLinks = [
 
 const { title, description, keywords } = Astro.props;
 const sideLinkClasses = "mb-8 md:mb-2 transition duration-100 ";
-const passiveLinkClasses = "hover:text-orange-600 text-white";
-const activeLinkClasses = "text-orange-600";
+const passiveLinkClasses = "hover:text-theme-accent text-theme-text";
+const activeLinkClasses = "text-theme-accent";
 
 import { Icon } from "astro-icon/components";
 ---
@@ -58,10 +58,71 @@ import { Icon } from "astro-icon/components";
     />
     <title>{title}</title>
     <ViewTransitions />
+
+    <!-- Inline script to prevent flash of wrong theme -->
+    <script is:inline>
+      (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+          document.documentElement.setAttribute('data-theme', saved);
+        }
+      })();
+    </script>
   </head>
-  <body class="bg-zinc-900">
-    <div class="w-full min-h-screen flex flex-col md:flex-row">
-      <div id="topNav" class="bg-zinc-800 flex justify-between md:hidden">
+  <body class="bg-theme-body">
+    <!-- 90s Baby decorative floating shapes (hidden by default, shown via CSS when theme is active) -->
+    <div class="nineties-deco" aria-hidden="true">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <!-- Floating triangles -->
+        <polygon points="60,10 70,30 50,30" fill="#67E8F9" opacity="0.25">
+          <animateTransform attributeName="transform" type="rotate" values="0 60 20;360 60 20" dur="20s" repeatCount="indefinite"/>
+        </polygon>
+        <polygon points="85%,15% 90%,8% 95%,15%" fill="#F0ABFC" opacity="0.2">
+          <animateTransform attributeName="transform" type="rotate" values="0 800 80;-360 800 80" dur="25s" repeatCount="indefinite"/>
+        </polygon>
+        <polygon points="70%,85% 75%,75% 80%,85%" fill="#A78BFA" opacity="0.18">
+          <animateTransform attributeName="transform" type="rotate" values="0 600 600;360 600 600" dur="30s" repeatCount="indefinite"/>
+        </polygon>
+
+        <!-- Floating circles -->
+        <circle cx="15%" cy="25%" r="18" fill="none" stroke="#67E8F9" stroke-width="2.5" opacity="0.3">
+          <animate attributeName="cy" values="25%;28%;25%" dur="6s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="88%" cy="45%" r="12" fill="#F0ABFC" opacity="0.15">
+          <animate attributeName="cy" values="45%;42%;45%" dur="8s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="45%" cy="90%" r="22" fill="none" stroke="#A78BFA" stroke-width="2" opacity="0.2">
+          <animate attributeName="cx" values="45%;48%;45%" dur="10s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Squiggly lines -->
+        <path d="M 5% 60% Q 8% 55%, 11% 60% T 17% 60% T 23% 60%" fill="none" stroke="#67E8F9" stroke-width="2.5" stroke-linecap="round" opacity="0.25">
+          <animate attributeName="d" values="M 5% 60% Q 8% 55%, 11% 60% T 17% 60% T 23% 60%;M 5% 62% Q 8% 57%, 11% 62% T 17% 62% T 23% 62%;M 5% 60% Q 8% 55%, 11% 60% T 17% 60% T 23% 60%" dur="5s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 75% 70% Q 78% 65%, 81% 70% T 87% 70% T 93% 70%" fill="none" stroke="#F0ABFC" stroke-width="2" stroke-linecap="round" opacity="0.22">
+          <animate attributeName="d" values="M 75% 70% Q 78% 65%, 81% 70% T 87% 70% T 93% 70%;M 75% 72% Q 78% 67%, 81% 72% T 87% 72% T 93% 72%;M 75% 70% Q 78% 65%, 81% 70% T 87% 70% T 93% 70%" dur="7s" repeatCount="indefinite"/>
+        </path>
+
+        <!-- Stars / sparkles -->
+        <path d="M 30% 15% l 2 -6 2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z" fill="#F0ABFC" opacity="0.3">
+          <animate attributeName="opacity" values="0.3;0.1;0.3" dur="3s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 92% 88% l 1.5 -4.5 1.5 4.5 4.5 1.5 -4.5 1.5 -1.5 4.5 -1.5 -4.5 -4.5 -1.5 4.5 -1.5z" fill="#67E8F9" opacity="0.25">
+          <animate attributeName="opacity" values="0.25;0.08;0.25" dur="4s" repeatCount="indefinite"/>
+        </path>
+        <path d="M 55% 50% l 1.5 -4.5 1.5 4.5 4.5 1.5 -4.5 1.5 -1.5 4.5 -1.5 -4.5 -4.5 -1.5 4.5 -1.5z" fill="#A78BFA" opacity="0.2">
+          <animate attributeName="opacity" values="0.2;0.05;0.2" dur="5s" repeatCount="indefinite"/>
+        </path>
+
+        <!-- Zig-zag / lightning bolt -->
+        <polyline points="20%,40% 22%,35% 24%,42% 26%,37% 28%,44%" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.22">
+          <animate attributeName="opacity" values="0.22;0.1;0.22" dur="4s" repeatCount="indefinite"/>
+        </polyline>
+      </svg>
+    </div>
+
+    <div class="w-full min-h-screen flex flex-col md:flex-row relative z-[1]">
+      <div id="topNav" class="bg-theme-sidebar flex justify-between md:hidden">
         <div
           class="gradient-border fill-bg min-h-16 min-w-16 flex items-center justify-center"
         >
@@ -69,24 +130,30 @@ import { Icon } from "astro-icon/components";
             <Icon
               name="tabler:hexagon-letter-s-filled"
               size={48}
-              class="hover:text-white transition duration-100 z-10 relative"
+              class="hover:text-theme-text transition duration-100 z-10 relative"
             /></a
           >
         </div>
-        <div id="topNavToggle" class="flex justify-center items-center mr-2">
-          <Icon
-            name="fa6-solid:bars"
-            size={36}
-            class="text-zinc-600 hover:text-orange-600 transition duration-100"
-          />
+        <div class="flex items-center gap-2 mr-2">
+          <select id="themeSelectMobile" class="theme-selector" aria-label="Select theme">
+            <option value="default">Default</option>
+            <option value="90s-baby">90s Baby</option>
+          </select>
+          <div id="topNavToggle" class="flex justify-center items-center">
+            <Icon
+              name="fa6-solid:bars"
+              size={36}
+              class="text-theme-icon-idle hover:text-theme-accent transition duration-100"
+            />
+          </div>
         </div>
       </div>
       <div
         id="sidebar"
-        class="gradient-border min-h-screen bg-zinc-800 md:min-w-[270px] md:w-1/3 w-full md:flex justify-end md:!relative hidden !absolute top-16 md:top-0 left-0 z-10"
+        class="gradient-border min-h-screen bg-theme-sidebar nineties-sidebar-pattern md:min-w-[270px] md:w-1/3 w-full md:flex justify-end md:!relative hidden !absolute top-16 md:top-0 left-0 z-10"
       >
         <div
-          class="max-h-[850px] h-full min-w-[270px] max-w-full py-12 px-6 flex flex-col justify-between items-end text-white sticky top-0"
+          class="max-h-[850px] h-full min-w-[270px] max-w-full py-12 px-6 flex flex-col justify-between items-end text-theme-text sticky top-0"
         >
           <div class="flex flex-col items-center w-full">
             <nav class="flex justify-center w-full">
@@ -105,6 +172,15 @@ import { Icon } from "astro-icon/components";
                 }
               </ul>
             </nav>
+
+            <!-- Desktop theme selector -->
+            <div class="hidden md:flex items-center gap-2 mt-8 w-full justify-center">
+              <label for="themeSelectDesktop" class="text-xs text-theme-text-secondary">Theme:</label>
+              <select id="themeSelectDesktop" class="theme-selector" aria-label="Select theme">
+                <option value="default">Default</option>
+                <option value="90s-baby">90s Baby</option>
+              </select>
+            </div>
           </div>
           <div class="w-full mt-48 md:mt-0">
             <div class="flex flex-row justify-center">
@@ -116,7 +192,7 @@ import { Icon } from "astro-icon/components";
                 <Icon
                   name="mdi:linkedin"
                   size={36}
-                  class="hover:text-orange-600 transition duration-100"
+                  class="hover:text-theme-accent transition duration-100"
                 />
               </a>
               <a
@@ -128,7 +204,7 @@ import { Icon } from "astro-icon/components";
                 <Icon
                   name="mdi:twitter"
                   size={36}
-                  class="hover:text-orange-600 transition duration-100"
+                  class="hover:text-theme-accent transition duration-100"
                 />
               </a>
               <a
@@ -139,22 +215,44 @@ import { Icon } from "astro-icon/components";
                 <Icon
                   name="mdi:github"
                   size={36}
-                  class="hover:text-orange-600 transition duration-100"
+                  class="hover:text-theme-accent transition duration-100"
                 />
               </a>
             </div>
-            <span class="block text-center">© Bryce Stabenow, 2026</span>
+            <span class="block text-center">&copy; Bryce Stabenow, 2026</span>
           </div>
         </div>
       </div>
 
-      <main class="bg-zinc-700 w-full min-h-screen py-12 px-6 text-white">
+      <main class="bg-theme-main nineties-bg-pattern w-full min-h-screen py-12 px-6 text-theme-text">
         <div class="max-w-3xl mx-auto">
           <slot />
         </div>
       </main>
     </div>
     <script>
+      function setTheme(theme: string) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        // Sync all selector dropdowns
+        document.querySelectorAll<HTMLSelectElement>('.theme-selector').forEach(sel => {
+          sel.value = theme;
+        });
+      }
+
+      function initTheme() {
+        const saved = localStorage.getItem('theme') || 'default';
+        setTheme(saved);
+
+        // Attach change listeners to all theme selectors
+        document.querySelectorAll<HTMLSelectElement>('.theme-selector').forEach(sel => {
+          sel.addEventListener('change', (e) => {
+            const target = e.target as HTMLSelectElement;
+            setTheme(target.value);
+          });
+        });
+      }
+
       function toggleMenu() {
         const sidebar = document.getElementById("sidebar");
 
@@ -170,12 +268,14 @@ import { Icon } from "astro-icon/components";
         document
           .getElementById("topNavToggle")
           ?.addEventListener("click", toggleMenu);
+        initTheme();
       });
-      
+
       document.addEventListener("astro:after-swap", () => {
         document
           .getElementById("topNavToggle")
           ?.addEventListener("click", toggleMenu);
+        initTheme();
       });
     </script>
   </body>

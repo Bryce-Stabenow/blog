@@ -23,7 +23,7 @@
   }
 
   .markdown a {
-    color: rgb(234 88 12);
+    color: var(--theme-link-color);
   }
   
   .markdown a:hover{
@@ -36,14 +36,10 @@
   }
 
   .markdown blockquote {
-    color: rgb(80, 80, 80);
-    border-left: 5px solid rgb(230, 230, 230);
+    color: var(--theme-blockquote-text);
+    border-left: 5px solid var(--theme-blockquote-border);
     padding-left: 10px;
     font-size: 1.5rem;
-  }
-
-  .markdown blockquote {
-    color: rgb(200, 200, 200);
   }
 
   .markdown ul,
@@ -86,12 +82,12 @@
 
   .markdown th,
   .markdown td {
-    border: 1px solid rgb(180, 180, 180);
+    border: 1px solid var(--theme-table-border);
     padding: 4px;
   }
 
   .markdown th {
-    background-color: rgb(220, 220, 220);
+    background-color: var(--theme-table-header-bg);
     text-align: left;
   }
   
@@ -100,7 +96,7 @@
   }
   
   .markdown code{
-    background-color: rgb(39 39 42);
+    background-color: var(--theme-code-bg);
     padding: 2px 4px;
     font-family: monospace;
     max-width: calc(100vw - 330px) !important;

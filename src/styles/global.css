@@ -1,3 +1,64 @@
+/* ===========================
+   Theme Variable Definitions
+   =========================== */
+
+:root,
+[data-theme="default"] {
+  --theme-body: #18181b;
+  --theme-sidebar: #27272a;
+  --theme-main: #3f3f46;
+  --theme-accent: #ea580c;
+  --theme-accent-hover: #ea580c;
+  --theme-text: #ffffff;
+  --theme-text-secondary: #52525b;
+  --theme-card-hover: #52525b;
+  --theme-border-btn: #ffffff;
+  --theme-icon-idle: #52525b;
+
+  /* Gradient border */
+  --gradient-color-1: hsl(45, 100%, 70%);
+  --gradient-color-2: hsl(17, 97%, 62%);
+  --gradient-color-3: hsl(0, 95%, 66%);
+
+  /* Markdown */
+  --theme-link-color: rgb(234 88 12);
+  --theme-blockquote-text: rgb(200, 200, 200);
+  --theme-blockquote-border: rgb(230, 230, 230);
+  --theme-code-bg: rgb(39 39 42);
+  --theme-table-border: rgb(180, 180, 180);
+  --theme-table-header-bg: rgb(220, 220, 220);
+}
+
+[data-theme="90s-baby"] {
+  --theme-body: #FAF5FF;
+  --theme-sidebar: #EDE5F5;
+  --theme-main: #FEFCFA;
+  --theme-accent: #A855F7;
+  --theme-accent-hover: #9333EA;
+  --theme-text: #2E1065;
+  --theme-text-secondary: #7E6C9A;
+  --theme-card-hover: #F3E8FF;
+  --theme-border-btn: #7E6C9A;
+  --theme-icon-idle: #A78BFA;
+
+  /* Gradient border */
+  --gradient-color-1: #67E8F9;
+  --gradient-color-2: #A78BFA;
+  --gradient-color-3: #F0ABFC;
+
+  /* Markdown */
+  --theme-link-color: #9333EA;
+  --theme-blockquote-text: #6B5A85;
+  --theme-blockquote-border: #D8B4FE;
+  --theme-code-bg: #F3E8FF;
+  --theme-table-border: #D8B4FE;
+  --theme-table-header-bg: #EDE5F5;
+}
+
+/* ===========================
+   Base Styles
+   =========================== */
+
 * {
   box-sizing: border-box;
 }
@@ -5,6 +66,17 @@
 html {
   font-size: 18px;
 }
+
+body {
+    font-family: "Open Sans", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+/* ===========================
+   Masonry Layout
+   =========================== */
 
 .masonry {
   columns: 2;
@@ -60,13 +132,11 @@ html {
   }
 }
 
-body {
-    font-family: "Open Sans", monospace;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-  }
-  .gradient-border {
+/* ===========================
+   Gradient Border
+   =========================== */
+
+.gradient-border {
     --border-width: 3px;
     border-bottom: 0px;
     position: relative;
@@ -79,12 +149,12 @@ body {
       width: calc(var(--border-width) * 2);
       height: calc(
         100% + var(--border-width)
-      ); /* Set this to * 2 if you want y-axis border */
+      );
       background: linear-gradient(
         240deg,
-        hsl(45, 100%, 70%),
-        hsl(17, 97%, 62%),
-        hsl(0, 95%, 66%)
+        var(--gradient-color-1),
+        var(--gradient-color-2),
+        var(--gradient-color-3)
       );
       background-size: 300% 300%;
       background-position: 0 50%;
@@ -103,3 +173,87 @@ body {
       background-position: 100% 50%;
     }
   }
+
+/* ===========================
+   Theme Selector
+   =========================== */
+
+.theme-selector {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 1px solid var(--theme-accent);
+  color: var(--theme-text);
+  padding: 4px 28px 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: "Open Sans", monospace;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.theme-selector:hover {
+  border-color: var(--theme-accent-hover);
+}
+
+.theme-selector:focus {
+  border-color: var(--theme-accent);
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+}
+
+.theme-selector option {
+  background-color: var(--theme-sidebar);
+  color: var(--theme-text);
+}
+
+/* ===========================
+   90s Baby Theme Decorative Elements
+   =========================== */
+
+/* Floating shapes container for 90s theme */
+.nineties-deco {
+  display: none;
+}
+
+[data-theme="90s-baby"] .nineties-deco {
+  display: block;
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Background pattern for 90s theme main content */
+[data-theme="90s-baby"] .nineties-bg-pattern {
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(103, 232, 249, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(240, 171, 252, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(167, 139, 250, 0.05) 0%, transparent 70%);
+}
+
+/* Sidebar pattern for 90s theme */
+[data-theme="90s-baby"] .nineties-sidebar-pattern {
+  background-image:
+    radial-gradient(circle at 30% 70%, rgba(103, 232, 249, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(240, 171, 252, 0.12) 0%, transparent 40%);
+}
+
+/* Blog card border accent in 90s theme */
+[data-theme="90s-baby"] .blog-card-90s {
+  border: 1px solid #E9D5FF;
+  border-radius: 0.5rem;
+}
+
+[data-theme="90s-baby"] .blog-card-90s:hover {
+  border-color: #C084FC;
+}
+
+/* Grayscale override for 90s theme (keep images colorful) */
+[data-theme="90s-baby"] .theme-grayscale {
+  filter: none;
+}
