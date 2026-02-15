@@ -211,22 +211,8 @@ body {
 }
 
 /* ===========================
-   90s Baby Theme Decorative Elements
+   Taco Bell Theme Decorative Elements
    =========================== */
-
-/* Floating shapes container for 90s theme */
-.nineties-deco {
-  display: none;
-}
-
-[data-theme="90s-baby"] .nineties-deco {
-  display: block;
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  z-index: 0;
-}
 
 /* Background pattern for 90s theme main content */
 [data-theme="90s-baby"] .nineties-bg-pattern {
