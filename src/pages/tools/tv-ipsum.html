@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TV IPSUM — Filler Text From Your Fave Shows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FFF8E7;
+    --black: #1a1a1a;
+    --border: 3px solid var(--black);
+    --border-thick: 5px solid var(--black);
+    --shadow: 6px 6px 0px var(--black);
+    --shadow-lg: 10px 10px 0px var(--black);
+    --shadow-sm: 4px 4px 0px var(--black);
+    --office-yellow: #FFD93D;
+    --seinfeld-blue: #6EC1E4;
+    --futurama-pink: #FF6B9D;
+    --lime: #BAFF39;
+    --orange: #FF8C42;
+    --lavender: #C4B5FD;
+    --red: #FF4646;
+    --office-bg: #FFF3C4;
+    --seinfeld-bg: #D4F0FF;
+    --futurama-bg: #FFD6E5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: var(--cream);
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(186, 255, 57, 0.25) 0%, transparent 40%),
+      radial-gradient(circle at 85% 60%, rgba(255, 107, 157, 0.2) 0%, transparent 35%),
+      radial-gradient(circle at 50% 90%, rgba(110, 193, 228, 0.2) 0%, transparent 35%);
+    color: var(--black);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    min-height: 100vh;
+    cursor: crosshair;
+  }
+  .topbar {
+    height: 16px;
+    background: repeating-conic-gradient(var(--black) 0% 25%, var(--office-yellow) 0% 50%) 0 0 / 16px 16px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 48px 24px 100px; }
+  header {
+    margin-bottom: 48px;
+    position: relative;
+    animation: slamDown 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes slamDown {
+    0% { opacity: 0; transform: translateY(-30px) rotate(-2deg); }
+    60% { transform: translateY(4px) rotate(0.5deg); }
+    100% { opacity: 1; transform: translateY(0) rotate(0deg); }
+  }
+  .marquee-badge {
+    display: inline-block;
+    background: var(--lime);
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 6px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+    transform: rotate(-1deg);
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  h1 .highlight {
+    display: inline-block;
+    background: var(--office-yellow);
+    border: var(--border);
+    padding: 0 12px;
+    box-shadow: var(--shadow-sm);
+    transform: rotate(1deg);
+    margin: 4px 0;
+  }
+  h1 .highlight-pink {
+    display: inline-block;
+    background: var(--futurama-pink);
+    color: white;
+    border: var(--border);
+    padding: 0 12px;
+    box-shadow: var(--shadow-sm);
+    transform: rotate(-1.5deg);
+    margin: 4px 0;
+  }
+  header p { font-size: 18px; line-height: 1.5; max-width: 520px; color: #444; margin-top: 8px; }
+  .deco-circle {
+    position: absolute; right: -10px; top: 10px;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--seinfeld-blue); border: var(--border);
+    box-shadow: var(--shadow); animation: bob 3s ease-in-out infinite; z-index: -1;
+  }
+  .deco-star {
+    position: absolute; right: 60px; top: -20px;
+    font-size: 40px; animation: spin 8s linear infinite; z-index: -1;
+  }
+  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(5deg); } }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .controls {
+    background: white; border: var(--border-thick);
+    box-shadow: var(--shadow-lg); padding: 0; margin-bottom: 40px;
+    animation: slamDown 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  }
+  .controls-title-bar {
+    background: var(--black); color: white; padding: 10px 20px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .window-dots { display: flex; gap: 6px; }
+  .window-dots span { width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); }
+  .window-dots span:nth-child(1) { background: var(--red); }
+  .window-dots span:nth-child(2) { background: var(--office-yellow); }
+  .window-dots span:nth-child(3) { background: var(--lime); }
+  .controls-body { padding: 28px; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: #888;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 2px;
+    background: repeating-linear-gradient(90deg, var(--black) 0 4px, transparent 4px 8px); opacity: 0.15;
+  }
+  .show-toggles { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 28px; }
+  .show-toggle { cursor: pointer; user-select: none; position: relative; }
+  .show-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+  .show-toggle .pill {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 22px; border: var(--border); background: #f5f5f0;
+    font-size: 16px; font-weight: 700; transition: all 0.15s ease;
+    box-shadow: var(--shadow-sm);
+  }
+  .show-toggle .pill .check-box {
+    width: 22px; height: 22px; border: var(--border); background: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; transition: all 0.15s ease; flex-shrink: 0;
+  }
+  .show-toggle:hover .pill { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--black); }
+  .show-toggle:active .pill { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--black); }
+  .show-toggle.office input:checked ~ .pill { background: var(--office-yellow); }
+  .show-toggle.office input:checked ~ .pill .check-box { background: var(--black); color: var(--office-yellow); }
+  .show-toggle.seinfeld input:checked ~ .pill { background: var(--seinfeld-blue); }
+  .show-toggle.seinfeld input:checked ~ .pill .check-box { background: var(--black); color: var(--seinfeld-blue); }
+  .show-toggle.futurama input:checked ~ .pill { background: var(--futurama-pink); color: white; }
+  .show-toggle.futurama input:checked ~ .pill .check-box { background: var(--black); color: var(--futurama-pink); }
+  .config-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: end; }
+  .config-group { flex: 1; min-width: 140px; }
+  .config-group label {
+    display: block; font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 8px;
+  }
+  .config-group select, .config-group input[type="number"] {
+    width: 100%; padding: 12px 16px; border: var(--border); background: white;
+    font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; font-weight: 700;
+    outline: none; box-shadow: var(--shadow-sm); transition: all 0.15s ease;
+    -webkit-appearance: none; border-radius: 0;
+  }
+  .config-group select:focus, .config-group input:focus { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--black); }
+  .btn-generate {
+    padding: 14px 32px; background: var(--lime); color: var(--black);
+    border: var(--border); font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 17px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.04em; cursor: pointer; box-shadow: var(--shadow);
+    transition: all 0.15s ease; white-space: nowrap;
+  }
+  .btn-generate:hover { transform: translate(-3px, -3px); box-shadow: 13px 13px 0px var(--black); background: #c8ff50; }
+  .btn-generate:active { transform: translate(3px, 3px); box-shadow: 3px 3px 0px var(--black); }
+  .output-area { animation: slamDown 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both; }
+  .output-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .output-header h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: 28px; display: flex; align-items: center; gap: 10px; }
+  .output-header h2 .arrow { display: inline-block; font-size: 24px; animation: bounce 1s ease-in-out infinite; }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  .btn-copy {
+    display: flex; align-items: center; gap: 8px; padding: 10px 20px;
+    background: var(--lavender); border: var(--border); box-shadow: var(--shadow-sm);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; cursor: pointer; transition: all 0.15s ease;
+  }
+  .btn-copy:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--black); }
+  .btn-copy:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--black); }
+  .btn-copy.copied { background: var(--lime); }
+  .btn-copy svg { width: 16px; height: 16px; }
+  .output-box {
+    background: white; border: var(--border-thick); box-shadow: var(--shadow-lg);
+    padding: 36px; min-height: 220px; line-height: 1.8; font-size: 16px; position: relative;
+  }
+  .output-box p { margin-bottom: 22px; }
+  .output-box p:last-child { margin-bottom: 0; }
+  .source-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 700; padding: 3px 8px; border: 2px solid var(--black);
+    margin-right: 8px; vertical-align: middle; position: relative;
+    top: -2px; box-shadow: 2px 2px 0px var(--black);
+  }
+  .source-tag.office { background: var(--office-yellow); }
+  .source-tag.seinfeld { background: var(--seinfeld-blue); }
+  .source-tag.futurama { background: var(--futurama-pink); color: white; }
+  .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 220px; gap: 16px; text-align: center; }
+  .empty-state .empty-icon { font-size: 48px; animation: bob 2s ease-in-out infinite; }
+  .empty-state .empty-text { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+  .output-box::after {
+    content: '✦'; position: absolute; bottom: -18px; right: 30px;
+    font-size: 28px; background: var(--orange); border: var(--border);
+    box-shadow: var(--shadow-sm); width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    transform: rotate(12deg); line-height: 44px; text-align: center;
+  }
+  footer { margin-top: 56px; text-align: center; animation: slamDown 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both; }
+  .footer-strip { display: inline-flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .footer-chip {
+    display: inline-block; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 6px 14px; border: 2px solid var(--black); background: white;
+    box-shadow: 3px 3px 0px var(--black);
+  }
+  .footer-chip:nth-child(2) { background: var(--office-bg); }
+  .footer-chip:nth-child(3) { background: var(--futurama-bg); }
+  @media (max-width: 600px) {
+    .container { padding: 32px 16px 80px; }
+    .controls-body { padding: 20px; }
+    .output-box { padding: 24px; }
+    .config-row { flex-direction: column; }
+    .btn-generate { width: 100%; text-align: center; }
+    .deco-circle, .deco-star { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div class="container">
+  <header>
+    <h1>TV<br><span class="highlight">IPSUM</span><br><span class="highlight-pink">Generator</span></h1>
+    <p>Filler text pulled straight from Dunder Mifflin, the Monk's Café booth, and the Planet Express ship.</p>
+    <div class="deco-circle"></div>
+    <div class="deco-star">✳︎</div>
+  </header>
+  <div class="controls">
+    <div class="controls-title-bar">
+      <div class="window-dots"><span></span><span></span><span></span></div>
+      Configure
+    </div>
+    <div class="controls-body">
+      <div class="section-label">Pick Your Shows</div>
+      <div class="show-toggles">
+        <label class="show-toggle office">
+          <input type="checkbox" id="toggle-office" checked>
+          <span class="pill"><span class="check-box">✓</span>The Office</span>
+        </label>
+        <label class="show-toggle seinfeld">
+          <input type="checkbox" id="toggle-seinfeld" checked>
+          <span class="pill"><span class="check-box">✓</span>Seinfeld</span>
+        </label>
+        <label class="show-toggle futurama">
+          <input type="checkbox" id="toggle-futurama" checked>
+          <span class="pill"><span class="check-box">✓</span>Futurama</span>
+        </label>
+      </div>
+      <div class="section-label">Output Settings</div>
+      <div class="config-row">
+        <div class="config-group">
+          <label>Type</label>
+          <select id="output-type">
+            <option value="paragraphs">Paragraphs</option>
+            <option value="sentences">Sentences</option>
+            <option value="words">Words</option>
+          </select>
+        </div>
+        <div class="config-group">
+          <label>Amount</label>
+          <input type="number" id="output-count" value="3" min="1" max="50">
+        </div>
+        <div class="config-group" style="flex: none;">
+          <label>&nbsp;</label>
+          <button class="btn-generate" onclick="generate()">Generate →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="output-area">
+    <div class="output-header">
+      <h2><span class="arrow">↓</span> Output</h2>
+      <button class="btn-copy" onclick="copyOutput()" id="btn-copy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="output-box" id="output">
+      <div class="empty-state">
+        <div class="empty-icon">📺</div>
+        <div class="empty-text">Select shows & hit generate</div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-strip">
+      <span class="footer-chip">Zero Dependencies</span>
+      <span class="footer-chip">Host Anywhere</span>
+      <span class="footer-chip">Made With ♥</span>
+    </div>
+  </footer>
+</div>
+<script>
+const QUOTES={office:["Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.","I'm not superstitious, but I am a little stitious.","Sometimes I'll start a sentence and I don't even know where it's going. I just hope I find it along the way.","I knew exactly what to do, but in a much more real sense I had no idea what to do.","There's a lot of beauty in ordinary things. Isn't that kind of the point?","I talk a lot, so I've learned to tune myself out.","I am Beyoncé, always.","I feel like all my kids grew up and then they married each other. It's every parent's dream.","I am running away from my responsibilities and it feels good.","The worst thing about prison was the dementors.","An office is not for dying. An office is a place for living life to the fullest, to the max, to the extreme.","The people that you work with are, when you get down to it, your very best friends.","You miss one hundred percent of the shots you don't take.","I wish there was a way to know you're in the good old days before you've actually left them.","Everything I have I owe to this job. This stupid, wonderful, boring, amazing job.","Bears, beets, Battlestar Galactica.","Identity theft is not a joke. Millions of families suffer every year.","I am a victim of a series of accidents, as are we all.","That's what she said. That's really what she said.","I am about to do something very bold in this job that I've never done before: try.","Dwight, you ignorant slut.","It takes an advanced sense of humor. I don't expect everybody to understand.","It just seems awfully mean. But sometimes the ends justify the mean.","I understand nothing. But I pretend I do, and people seem fine with it.","I want people to be afraid of how much they love me.","I'm an early bird and a night owl, so I'm wise and I have worms.","There are always a million reasons not to do something.","I don't care what they say about me. I just want to eat.","I got six numbers. One more would have been a complete phone number.","If I had a gun with two bullets and I was in a room with Hitler, Bin Laden, and Toby, I would shoot Toby twice."],seinfeld:["No soup for you! Come back, one year!","Not that there's anything wrong with that.","Serenity now! Serenity now!","I'm out there, Jerry, and I'm loving every minute of it!","A George divided against itself cannot stand.","These pretzels are making me thirsty.","It's not a lie if you believe it.","People don't turn down money! It's what separates us from the animals.","I don't want to be a pirate!","You know, we're living in a society! We're supposed to act in a civilized way.","Jerry, just remember, it's not a lie if you believe it.","The sea was angry that day, my friends, like an old man trying to send back soup in a deli.","Yada yada yada.","I was in the pool! I was in the pool!","I'm Victoria's secret. It's a secret because no one could ever imagine it.","Looking at cleavage is like looking at the sun. You don't stare at it. You get a sense of it and then you look away.","This is the most public yet of my many humiliations.","You want to get nuts? Come on, let's get nuts!","I have a really important question: Is it possible that I'm not as attractive as I think I am?","Why does everything have to be so jokey with you?","You can't have a good time with a bad haircut.","What is this obsession people have with books? They put them in their houses like they're trophies.","I think if one is going to consider oneself a so-called friend, one might as well go the distance.","I don't think I've ever been to an appointment in my life where I wanted the other guy to show up.","My whole life has been a complete waste of time.","I spend so much time trying to get their clothes off, I never thought of taking mine off.","You know the message you're sending out to the world with these sweatpants? You're telling the world: I give up.","I have no power. Why should I have power? I have no power.","Every instinct I have in every aspect of life is to do the opposite.","Was that wrong? Should I not have done that? I tell you, I gotta plead ignorance on this thing.","My name is George. I'm unemployed and I live with my parents.","Do you ever just get down on your knees and thank God that you know me and have access to my dementia?"],futurama:["Good news, everyone! I've taught the toaster to feel love!","Bite my shiny metal posterior.","I'm walking on sunshine! Whoa-oh!","Shut up and take my money!","I'm going to build my own theme park, with blackjack.","When you do things right, people won't be sure you've done anything at all.","The use of words expressing something other than their literal intention. Now that is irony.","Congratulations, Fry! You've snagged the perfect girlfriend. Amy is rich, she's probably got other qualities.","I find the most erotic part of a woman is the boobies.","Have you ever tried simply turning off the TV, sitting down with your children, and hitting them?","Oh, I don't have time for this. I have to go and buy a single piece of fruit with a coupon and then return it, making people wait behind me while I complain.","Sweet zombie Jesus!","I'm so embarrassed. I wish everybody else was dead.","My story is a lot like yours, only more interesting because it involves robots.","Cheese it!","Fry, you can't just sit here in the dark listening to classical music.","I don't want to live on this planet anymore.","Compare your lives to mine and then kill yourselves.","Do a flip!","That's the saltiest thing I've ever tasted, and I once ate a big heaping bowl of salt.","I'm not a robot. I don't like having disks crammed into me. Unless they're Oreos. And then only in the mouth.","The spirit is willing, but the flesh is spongy and bruised.","I could eat. And fertilize.","Blackmail is such an ugly word. I prefer extortion. The X makes it sound cool.","Interesting. No, wait. The other thing. Tedious.","Our love isn't any less real just because it's on the internet.","I am the man with no name, Zapp Brannigan at your service.","Calculon is devastated, but not so devastated that he can't act.","Now I'll need to create a humongous genetic mutation. I know, I'll ask my good friend Hubert.","One day a robot's gonna eliminate the need for the whole human race."]};
+
+function getActiveSources(){
+  const s=[];
+  if(document.getElementById('toggle-office').checked)s.push('office');
+  if(document.getElementById('toggle-seinfeld').checked)s.push('seinfeld');
+  if(document.getElementById('toggle-futurama').checked)s.push('futurama');
+  return s;
+}
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function getRandomQuotes(sources,count){
+  let pool=[];
+  sources.forEach(s=>QUOTES[s].forEach(q=>pool.push({text:q,source:s})));
+  pool=shuffle(pool);
+  const r=[];for(let i=0;i<count;i++)r.push(pool[i%pool.length]);
+  return r;
+}
+function formatSource(s){return{office:'The Office',seinfeld:'Seinfeld',futurama:'Futurama'}[s]||s;}
+function buildParagraph(sources,n=4){
+  const quotes=getRandomQuotes(sources,n);
+  const multi=sources.length>1;
+  let h='';
+  if(multi)h+=`<span class="source-tag ${quotes[0].source}">${formatSource(quotes[0].source)}</span>`;
+  h+=quotes.map(q=>q.text).join(' ');
+  return h;
+}
+function generate(){
+  const sources=getActiveSources();
+  const o=document.getElementById('output');
+  if(!sources.length){o.innerHTML=`<div class="empty-state"><div class="empty-icon">⚠️</div><div class="empty-text">Pick at least one show!</div></div>`;return;}
+  const type=document.getElementById('output-type').value;
+  let count=Math.max(1,Math.min(parseInt(document.getElementById('output-count').value)||3,50));
+  let html='';
+  if(type==='paragraphs'){for(let i=0;i<count;i++){html+=`<p>${buildParagraph(sources,3+Math.floor(Math.random()*3))}</p>`;}}
+  else if(type==='sentences'){const q=getRandomQuotes(sources,count);const m=sources.length>1;html='<p>';q.forEach(x=>{if(m)html+=`<span class="source-tag ${x.source}">${formatSource(x.source)}</span>`;html+=x.text+' ';});html+='</p>';}
+  else{const q=getRandomQuotes(sources,50);let w=[];for(const x of q){w.push(...x.text.split(/\s+/));if(w.length>=count)break;}html=`<p>${w.slice(0,count).join(' ')}</p>`;}
+  o.innerHTML=html;o.style.animation='none';o.offsetHeight;o.style.animation='slamDown 0.3s cubic-bezier(0.22, 1, 0.36, 1)';
+}
+function copyOutput(){
+  const o=document.getElementById('output');const t=o.innerText;
+  if(!t||t.includes('Select shows')||t.includes('Pick at least'))return;
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=document.getElementById('btn-copy');b.classList.add('copied');
+    b.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(()=>{b.classList.remove('copied');b.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;},2000);
+  });
+}
+generate();
+</script>
+</body>
+</html>
