@@ -29,6 +29,32 @@
   --theme-table-header-bg: rgb(220, 220, 220);
 }
 
+[data-theme="win95"] {
+  --theme-body: #008080;           /* Classic Win95 teal desktop */
+  --theme-sidebar: #c0c0c0;        /* Silver window panel */
+  --theme-main: #ffffff;           /* White document area */
+  --theme-accent: #000080;         /* Navy blue */
+  --theme-accent-hover: #1084d0;   /* Bright blue hover */
+  --theme-text: #000000;           /* Black */
+  --theme-text-secondary: #6f6f6f; /* Mid gray */
+  --theme-card-hover: #d4d0c8;     /* Slightly darker gray */
+  --theme-border-btn: #808080;     /* Gray border */
+  --theme-icon-idle: #808080;      /* Gray icons */
+
+  /* Gradient border - Win95 blues */
+  --gradient-color-1: #000080;
+  --gradient-color-2: #1084d0;
+  --gradient-color-3: #4169e1;
+
+  /* Markdown */
+  --theme-link-color: #000080;
+  --theme-blockquote-text: #444444;
+  --theme-blockquote-border: #808080;
+  --theme-code-bg: #d4d0c8;
+  --theme-table-border: #808080;
+  --theme-table-header-bg: #c0c0c0;
+}
+
 [data-theme="90s-baby"] {
   --theme-body: #FAF5FF;
   --theme-sidebar: #EDE5F5;
@@ -241,5 +267,78 @@ body {
 
 /* Grayscale override for 90s theme (keep images colorful) */
 [data-theme="90s-baby"] .theme-grayscale {
+  filter: none;
+}
+
+/* ===========================
+   Windows 95 Theme Styles
+   =========================== */
+
+/* Font override */
+[data-theme="win95"],
+[data-theme="win95"] select,
+[data-theme="win95"] input,
+[data-theme="win95"] button {
+  font-family: "Pixelify Sans", "Tahoma", "MS Sans Serif", "Arial", sans-serif;
+}
+
+/* Remove all rounded corners */
+[data-theme="win95"] * {
+  border-radius: 0 !important;
+}
+
+/* Override animated gradient border — replace with a solid Win95 blue bar */
+[data-theme="win95"] .gradient-border::after {
+  background: linear-gradient(180deg, #000080, #1084d0, #000080) !important;
+  animation: none !important;
+}
+
+/* Sidebar — raised 3D panel */
+[data-theme="win95"] .win95-sidebar {
+  box-shadow:
+    inset -2px -2px 0 #808080,
+    inset 2px 2px 0 #dfdfdf;
+  border-right: 1px solid #606060;
+}
+
+/* Main content — inset document area */
+[data-theme="win95"] .win95-main {
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  box-shadow: inset 1px 1px 0 #dfdfdf;
+}
+
+/* Blog cards — raised button / panel style */
+[data-theme="win95"] .blog-card-90s {
+  border: 2px solid !important;
+  border-top-color: #dfdfdf !important;
+  border-left-color: #dfdfdf !important;
+  border-right-color: #808080 !important;
+  border-bottom-color: #808080 !important;
+  background-color: #d4d0c8;
+}
+
+/* Blog cards pressed / active state */
+[data-theme="win95"] .blog-card-90s:hover {
+  border-top-color: #808080 !important;
+  border-left-color: #808080 !important;
+  border-right-color: #dfdfdf !important;
+  border-bottom-color: #dfdfdf !important;
+  background-color: #c0c0c0;
+}
+
+/* Theme selector — Win95 inset style */
+[data-theme="win95"] .theme-selector {
+  border: 2px solid;
+  border-top-color: #808080;
+  border-left-color: #808080;
+  border-right-color: #dfdfdf;
+  border-bottom-color: #dfdfdf;
+  background-color: #ffffff;
+  font-family: "Pixelify Sans", "Tahoma", "MS Sans Serif", "Arial", sans-serif;
+}
+
+/* Keep images colorful in Win95 theme */
+[data-theme="win95"] .theme-grayscale {
   filter: none;
 }
