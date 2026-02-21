@@ -54,7 +54,7 @@ import { Icon } from "astro-icon/components";
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pixelify+Sans:wght@400..700&display=swap"
       rel="stylesheet"
     />
     <title>{title}</title>
@@ -88,6 +88,7 @@ import { Icon } from "astro-icon/components";
           <select id="themeSelectMobile" class="theme-selector" aria-label="Select theme">
             <option value="default">Default</option>
             <option value="90s-baby">90s Taco Bell</option>
+            <option value="win95">Windows 95</option>
           </select>
           <div id="topNavToggle" class="flex justify-center items-center">
             <Icon
@@ -100,7 +101,7 @@ import { Icon } from "astro-icon/components";
       </div>
       <div
         id="sidebar"
-        class="gradient-border min-h-screen bg-theme-sidebar nineties-sidebar-pattern md:min-w-[270px] md:w-1/3 w-full md:flex justify-end md:!relative hidden !absolute top-16 md:top-0 left-0 z-10"
+        class="gradient-border min-h-screen bg-theme-sidebar nineties-sidebar-pattern win95-sidebar md:min-w-[270px] md:w-1/3 w-full md:flex justify-end md:!relative hidden !absolute top-16 md:top-0 left-0 z-10"
       >
         <div
           class="max-h-[850px] h-full min-w-[270px] max-w-full py-12 px-6 flex flex-col justify-between items-end text-theme-text sticky top-0"
@@ -129,6 +130,7 @@ import { Icon } from "astro-icon/components";
               <select id="themeSelectDesktop" class="theme-selector" aria-label="Select theme">
                 <option value="default">Default</option>
                 <option value="90s-baby">90s Taco Bell</option>
+                <option value="win95">Windows 95</option>
               </select>
             </div>
           </div>
@@ -174,7 +176,7 @@ import { Icon } from "astro-icon/components";
         </div>
       </div>
 
-      <main class="bg-theme-main nineties-bg-pattern w-full min-h-screen py-12 px-6 text-theme-text">
+      <main class="bg-theme-main nineties-bg-pattern win95-main w-full min-h-screen py-12 px-6 text-theme-text">
         <div class="max-w-3xl mx-auto">
           <slot />
         </div>
