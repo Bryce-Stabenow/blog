@@ -81,6 +81,33 @@
   --theme-table-header-bg: #EDE5F5;
 }
 
+[data-theme="stl-blues"] {
+  /* St. Louis Blues — Official Navy Blue (#002F87) & Gold (#FCB514) */
+  --theme-body: #EEF2FB;           /* Light blue-gray page wash */
+  --theme-sidebar: #E2EAF8;        /* Soft blue sidebar */
+  --theme-main: #FFFFFF;           /* Crisp white main content */
+  --theme-accent: #FCB514;         /* Blues gold */
+  --theme-accent-hover: #E5A310;   /* Deeper gold on hover */
+  --theme-text: #002F87;           /* Blues royal navy — dark, crisp on light bg */
+  --theme-text-secondary: #4D6FA8; /* Medium steel blue for secondary text */
+  --theme-card-hover: #D5E0F5;     /* Light blue card hover */
+  --theme-border-btn: #002F87;     /* Navy button borders */
+  --theme-icon-idle: #6B8EC4;      /* Muted steel blue for idle icons */
+
+  /* Gradient border — Gold → Navy → Steel Blue */
+  --gradient-color-1: #FCB514;
+  --gradient-color-2: #002F87;
+  --gradient-color-3: #5B7EC9;
+
+  /* Markdown */
+  --theme-link-color: #002F87;
+  --theme-blockquote-text: #2A4880;
+  --theme-blockquote-border: #FCB514;
+  --theme-code-bg: #EEF2FB;
+  --theme-table-border: #A0B8E0;
+  --theme-table-header-bg: #002F87;
+}
+
 /* ===========================
    Base Styles
    =========================== */
@@ -341,4 +368,64 @@ body {
 /* Keep images colorful in Win95 theme */
 [data-theme="win95"] .theme-grayscale {
   filter: none;
+}
+
+/* ===========================
+   STL Blues Theme Styles
+   =========================== */
+
+/* Font override — Barlow Condensed for headings/nav, Barlow for body */
+[data-theme="stl-blues"],
+[data-theme="stl-blues"] select,
+[data-theme="stl-blues"] input,
+[data-theme="stl-blues"] button {
+  font-family: "Barlow", "Open Sans", sans-serif;
+}
+
+[data-theme="stl-blues"] nav,
+[data-theme="stl-blues"] nav a,
+[data-theme="stl-blues"] h1,
+[data-theme="stl-blues"] h2,
+[data-theme="stl-blues"] h3 {
+  font-family: "Barlow Condensed", "Barlow", "Open Sans", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Buttons — sharp modern rectangle with subtle radius (Blues brand feel) */
+[data-theme="stl-blues"] .rounded-full {
+  border-radius: 4px !important;
+}
+
+/* Blog cards — clean border with gold accent on hover */
+[data-theme="stl-blues"] .blog-card-90s {
+  border: 1.5px solid #B8CCE8;
+  border-radius: 6px;
+  background-color: #FFFFFF;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+[data-theme="stl-blues"] .blog-card-90s:hover {
+  border-color: #FCB514;
+  border-width: 2px;
+  background-color: #D5E0F5;
+  box-shadow: 0 2px 8px rgba(0, 47, 135, 0.12);
+}
+
+/* Theme selector — Barlow Condensed with navy border */
+[data-theme="stl-blues"] .theme-selector {
+  font-family: "Barlow Condensed", "Barlow", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border-color: #002F87;
+}
+
+/* Keep images colorful in Blues theme */
+[data-theme="stl-blues"] .theme-grayscale {
+  filter: none;
+}
+
+/* Sidebar gradient border — use gold/navy instead of rainbow */
+[data-theme="stl-blues"] .gradient-border::after {
+  background: linear-gradient(240deg, #FCB514, #002F87, #5B7EC9) !important;
 }
