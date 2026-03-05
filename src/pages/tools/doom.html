@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DOOM (1993)</title>
+<link rel="stylesheet" href="https://js-dos.com/v7/build/releases/latest/js-dos/js-dos.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #c0392b;
+    --red-bright: #e74c3c;
+    --dark: #111111;
+    --dark-2: #1e1e1e;
+    --dark-3: #2a2a2a;
+    --text: #e0e0e0;
+    --text-dim: #888888;
+    --header-h: 48px;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Courier New', monospace;
+    overflow: hidden;
+  }
+
+  /* ---- Header ---- */
+  .header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    background: var(--dark-2);
+    border-bottom: 2px solid var(--red);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 16px;
+    z-index: 100;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--red-bright);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 1px solid var(--red);
+    transition: background 0.15s, color 0.15s;
+  }
+  .back-btn:hover {
+    background: var(--red);
+    color: #fff;
+  }
+
+  .title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .hint {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    display: none;
+  }
+  @media (min-width: 640px) {
+    .hint { display: block; }
+  }
+
+  /* ---- Game wrapper ---- */
+  .game-wrapper {
+    position: fixed;
+    top: var(--header-h);
+    left: 0; right: 0; bottom: 0;
+    background: #000;
+  }
+
+  #dos {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Override js-dos styles to fill container */
+  #dos .dosbox-container {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* ---- Loading overlay ---- */
+  .loading-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    z-index: 10;
+    gap: 20px;
+    pointer-events: none;
+  }
+  .loading-overlay.hidden { display: none; }
+
+  .loading-skull {
+    font-size: 64px;
+    animation: pulse 1s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.95); }
+  }
+
+  .loading-text {
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red-bright);
+    font-weight: 700;
+  }
+
+  .loading-bar-wrap {
+    width: 240px;
+    height: 6px;
+    background: var(--dark-3);
+    border: 1px solid var(--red);
+    overflow: hidden;
+  }
+  .loading-bar {
+    height: 100%;
+    background: var(--red-bright);
+    width: 0%;
+    transition: width 0.3s ease;
+    animation: loading-anim 3s ease-in-out infinite;
+  }
+  @keyframes loading-anim {
+    0%   { width: 0%; }
+    40%  { width: 70%; }
+    80%  { width: 90%; }
+    100% { width: 100%; }
+  }
+
+  .loading-sub {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ---- Mobile controls ---- */
+  .mobile-controls {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 20;
+    /* Only visible on touch-primary devices */
+    display: none;
+  }
+  @media (hover: none) and (pointer: coarse) {
+    .mobile-controls { display: block; }
+  }
+
+  .ctrl-btn {
+    position: absolute;
+    pointer-events: all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1.5px solid rgba(192, 57, 43, 0.7);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: none;
+    transition: background 0.1s, border-color 0.1s;
+    cursor: pointer;
+  }
+  .ctrl-btn:active,
+  .ctrl-btn.pressed {
+    background: rgba(192, 57, 43, 0.6);
+    border-color: rgba(231, 76, 60, 1);
+  }
+
+  /* D-pad positioning (bottom-left area) */
+  /* Each directional button: 56x56px */
+  /* Center of d-pad: left=90px, bottom=90px */
+  .btn-up    { left: 62px;  bottom: 138px; width: 56px; height: 56px; font-size: 22px; }
+  .btn-down  { left: 62px;  bottom: 26px;  width: 56px; height: 56px; font-size: 22px; }
+  .btn-left  { left: 2px;   bottom: 82px;  width: 56px; height: 56px; font-size: 22px; }
+  .btn-right { left: 122px; bottom: 82px;  width: 56px; height: 56px; font-size: 22px; }
+  /* D-pad center (visual only) */
+  .btn-center {
+    position: absolute;
+    left: 62px; bottom: 82px;
+    width: 56px; height: 56px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 6px;
+    pointer-events: none;
+    border: 1px solid rgba(100,100,100,0.3);
+  }
+
+  /* Action buttons (bottom-right area) */
+  .btn-fire  { right: 12px;  bottom: 120px; width: 64px; height: 64px; font-size: 11px; letter-spacing: 0.05em; flex-direction: column; gap: 3px; }
+  .btn-use   { right: 84px;  bottom: 26px;  width: 64px; height: 50px; font-size: 10px; letter-spacing: 0.05em; }
+  .btn-enter { right: 12px;  bottom: 26px;  width: 64px; height: 50px; font-size: 10px; letter-spacing: 0.05em; }
+
+  .btn-fire .btn-icon { font-size: 24px; }
+
+  /* Top utility buttons */
+  .btn-esc   { left: 50%; transform: translateX(calc(-50% - 44px)); top: 8px; width: 64px; height: 32px; font-size: 10px; letter-spacing: 0.08em; }
+  .btn-tab   { left: 50%; transform: translateX(calc(-50% + 44px)); top: 8px; width: 64px; height: 32px; font-size: 10px; letter-spacing: 0.08em; }
+
+  /* Sprint button (left, above d-pad) */
+  .btn-shift {
+    left: 2px;
+    bottom: 198px;
+    width: 178px;
+    height: 34px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="/tools" class="back-btn">&#8592; Tools</a>
+  <span class="title">DOOM (1993)</span>
+  <span class="hint">Arrows/WASD &nbsp;&#xB7;&nbsp; Ctrl = Fire &nbsp;&#xB7;&nbsp; Space = Open &nbsp;&#xB7;&nbsp; Shift = Run</span>
+</div>
+
+<div class="game-wrapper">
+  <div id="dos"></div>
+
+  <!-- Loading overlay (hidden once game starts) -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-skull">&#x1F480;</div>
+    <div class="loading-text">Loading DOOM&hellip;</div>
+    <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
+    <div class="loading-sub">Downloading ~5MB shareware bundle</div>
+  </div>
+
+  <!-- Mobile touch controls -->
+  <div class="mobile-controls" id="mobile-controls">
+
+    <!-- Utility: ESC and TAB at top center -->
+    <button class="ctrl-btn btn-esc" id="btn-esc" aria-label="Escape / Menu">ESC</button>
+    <button class="ctrl-btn btn-tab" id="btn-tab" aria-label="Tab / Automap">MAP</button>
+
+    <!-- Sprint bar above d-pad -->
+    <button class="ctrl-btn btn-shift" id="btn-shift" aria-label="Sprint">&#x21A5; SPRINT</button>
+
+    <!-- D-pad -->
+    <div class="btn-center"></div>
+    <button class="ctrl-btn btn-up"    id="btn-up"    aria-label="Move forward">&#x25B2;</button>
+    <button class="ctrl-btn btn-down"  id="btn-down"  aria-label="Move backward">&#x25BC;</button>
+    <button class="ctrl-btn btn-left"  id="btn-left"  aria-label="Turn left">&#x25C4;</button>
+    <button class="ctrl-btn btn-right" id="btn-right" aria-label="Turn right">&#x25BA;</button>
+
+    <!-- Action buttons -->
+    <button class="ctrl-btn btn-fire" id="btn-fire" aria-label="Fire">
+      <span class="btn-icon">&#x1F4A5;</span>
+      FIRE
+    </button>
+    <button class="ctrl-btn btn-use"   id="btn-use"   aria-label="Use / Open door">USE</button>
+    <button class="ctrl-btn btn-enter" id="btn-enter" aria-label="Enter / Confirm">ENTER</button>
+  </div>
+</div>
+
+<script src="https://js-dos.com/v7/build/releases/latest/js-dos/js-dos.js"></script>
+<script>
+  // XT (IBM PC Set 1) scan codes that DOSBox uses
+  var SCAN = {
+    esc:   1,
+    tab:   15,
+    enter: 28,
+    ctrl:  29,
+    shift: 42,
+    space: 57,
+    up:    72,
+    left:  75,
+    right: 77,
+    down:  80
+  };
+
+  var ci = null;
+  var loadingOverlay = document.getElementById('loading-overlay');
+
+  // Init js-dos v7
+  Dos(document.getElementById('dos'), {
+    pathPrefix: 'https://js-dos.com/v7/build/releases/latest/js-dos/',
+    onEvent: function(event, commandInterface) {
+      if (event === 'ci-ready') {
+        ci = commandInterface;
+      }
+      if (event === 'bnd-play') {
+        // Bundle is playing — game has started
+        if (loadingOverlay) {
+          loadingOverlay.classList.add('hidden');
+        }
+      }
+    }
+  }).run('https://cdn.dos.zone/custom/dos/doom.jsdos');
+
+  // ---- Mobile touch controls ----
+  // Sends repeated key presses while a button is held
+  function bindHoldKey(id, scanCode) {
+    var el = document.getElementById(id);
+    if (!el) return;
+
+    var interval = null;
+
+    function press() {
+      if (ci) ci.simulateKeyPress(scanCode);
+    }
+
+    function start(e) {
+      e.preventDefault();
+      press();
+      interval = setInterval(press, 50);
+      el.classList.add('pressed');
+    }
+
+    function stop(e) {
+      e.preventDefault();
+      clearInterval(interval);
+      interval = null;
+      el.classList.remove('pressed');
+    }
+
+    el.addEventListener('touchstart',  start,  { passive: false });
+    el.addEventListener('touchend',    stop,   { passive: false });
+    el.addEventListener('touchcancel', stop,   { passive: false });
+  }
+
+  // D-pad
+  bindHoldKey('btn-up',    SCAN.up);
+  bindHoldKey('btn-down',  SCAN.down);
+  bindHoldKey('btn-left',  SCAN.left);
+  bindHoldKey('btn-right', SCAN.right);
+
+  // Actions
+  bindHoldKey('btn-fire',  SCAN.ctrl);
+  bindHoldKey('btn-use',   SCAN.space);
+  bindHoldKey('btn-enter', SCAN.enter);
+
+  // Utility
+  bindHoldKey('btn-esc',   SCAN.esc);
+  bindHoldKey('btn-tab',   SCAN.tab);
+  bindHoldKey('btn-shift', SCAN.shift);
+</script>
+</body>
+</html>
