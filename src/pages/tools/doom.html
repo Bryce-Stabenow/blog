@@ -89,14 +89,9 @@
   }
 
   #dos {
+    display: block;
     width: 100%;
     height: 100%;
-  }
-
-  /* Override js-dos styles to fill container */
-  #dos .dosbox-container {
-    width: 100% !important;
-    height: 100% !important;
   }
 
   /* ---- Loading overlay ---- */
@@ -247,7 +242,7 @@
 </div>
 
 <div class="game-wrapper">
-  <div id="dos"></div>
+  <canvas id="dos"></canvas>
 
   <!-- Loading overlay (hidden once game starts) -->
   <div class="loading-overlay" id="loading-overlay">
