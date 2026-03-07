@@ -305,14 +305,12 @@
       if (event === 'ci-ready') {
         ci = commandInterface;
       }
-      if (event === 'bnd-play') {
-        // Bundle is playing — game has started
-        if (loadingOverlay) {
-          loadingOverlay.classList.add('hidden');
-        }
-      }
     }
-  }).run('/doom.jsdos');
+  }).run('/doom.jsdos').then(function() {
+    if (loadingOverlay) {
+      loadingOverlay.classList.add('hidden');
+    }
+  });
 
   // ---- Mobile touch controls ----
   // Sends repeated key presses while a button is held
