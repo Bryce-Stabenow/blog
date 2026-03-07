@@ -300,6 +300,7 @@
 
   // Init js-dos v7
   Dos(document.getElementById('dos'), {
+    pathPrefix: 'https://js-dos.com/v7/build/releases/latest/js-dos/',
     onEvent: function(event, commandInterface) {
       if (event === 'ci-ready') {
         ci = commandInterface;
