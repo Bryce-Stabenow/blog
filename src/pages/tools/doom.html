@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>DOOM (1993)</title>
-<link rel="stylesheet" href="https://js-dos.com/v7/build/releases/latest/js-dos/js-dos.css">
+<link rel="stylesheet" href="/js-dos/js-dos.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -279,7 +279,7 @@
   </div>
 </div>
 
-<script src="https://js-dos.com/v7/build/releases/latest/js-dos/js-dos.js"></script>
+<script src="/js-dos/js-dos.js"></script>
 <script>
   // XT (IBM PC Set 1) scan codes that DOSBox uses
   var SCAN = {
@@ -300,7 +300,7 @@
 
   // Init js-dos v7
   Dos(document.getElementById('dos'), {
-    pathPrefix: 'https://js-dos.com/v7/build/releases/latest/js-dos/',
+    pathPrefix: '/js-dos/',
     onEvent: function(event, commandInterface) {
       if (event === 'ci-ready') {
         ci = commandInterface;
