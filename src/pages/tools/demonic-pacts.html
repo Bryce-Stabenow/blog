@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demonic Pacts Planner — OSRS Leagues VI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0810;
+    --card: #18122b;
+    --border-color: #2e2248;
+    --border: 3px solid var(--border-color);
+    --border-thick: 5px solid var(--border-color);
+    --crimson: #c0392b;
+    --crimson-light: #e74c3c;
+    --gold: #f1c40f;
+    --gold-dark: #c49b0a;
+    --melee: #e67e22;
+    --melee-bg: rgba(230,126,34,0.15);
+    --ranged: #27ae60;
+    --ranged-bg: rgba(39,174,96,0.15);
+    --magic: #2980b9;
+    --magic-bg: rgba(41,128,185,0.15);
+    --fire: #e74c3c;
+    --fire-bg: rgba(231,76,60,0.15);
+    --earth: #a0703a;
+    --earth-bg: rgba(160,112,58,0.15);
+    --air: #6495ed;
+    --air-bg: rgba(100,149,237,0.15);
+    --water: #5dade2;
+    --water-bg: rgba(93,173,226,0.15);
+    --text: #ede8f5;
+    --text-muted: #7060a0;
+    --shadow: 6px 6px 0px rgba(0,0,0,0.7);
+    --shadow-sm: 3px 3px 0px rgba(0,0,0,0.7);
+    --shadow-lg: 10px 10px 0px rgba(0,0,0,0.7);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 25%, rgba(192,57,43,0.12) 0%, transparent 45%),
+      radial-gradient(circle at 85% 65%, rgba(41,128,185,0.1) 0%, transparent 45%),
+      radial-gradient(circle at 50% 90%, rgba(241,196,15,0.06) 0%, transparent 35%);
+    color: var(--text);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    min-height: 100vh;
+  }
+  .topbar {
+    height: 12px;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--crimson) 0px,
+      var(--crimson) 8px,
+      #1a0a0a 8px,
+      #1a0a0a 16px
+    );
+  }
+  .container { max-width: 1020px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* ── Header ── */
+  header { margin-bottom: 36px; position: relative; animation: fadeDown 0.4s ease both; }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+  .league-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--crimson);
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 5px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 18px;
+    color: white;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    margin-bottom: 14px;
+  }
+  h1 .t-main { display: block; }
+  h1 .t-red {
+    display: inline-block;
+    background: var(--crimson);
+    color: #fff;
+    border: var(--border);
+    padding: 0 16px;
+    box-shadow: var(--shadow-sm);
+    transform: rotate(-1.2deg);
+    margin: 4px 0;
+  }
+  h1 .t-gold {
+    display: inline-block;
+    background: var(--gold);
+    color: #0c0810;
+    border: var(--border);
+    padding: 0 16px;
+    box-shadow: var(--shadow-sm);
+    transform: rotate(1.4deg);
+    margin: 4px 0;
+  }
+  .header-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 540px;
+    color: var(--text-muted);
+    margin-top: 10px;
+  }
+  .deco-skull {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 72px;
+    opacity: 0.08;
+    animation: float 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes float { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-12px) rotate(5deg); } }
+
+  /* ── Countdown ── */
+  .countdown-panel {
+    background: var(--card);
+    border: var(--border);
+    box-shadow: var(--shadow);
+    padding: 18px 22px;
+    margin-bottom: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    animation: fadeDown 0.4s 0.05s ease both;
+  }
+  .countdown-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .countdown-units { display: flex; gap: 14px; flex-wrap: wrap; }
+  .cd-unit { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .cd-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 44px;
+    text-align: center;
+  }
+  .cd-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .live-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ranged);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ranged); animation: blink 1.2s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  /* ── Budget Panel ── */
+  .budget-panel {
+    background: var(--card);
+    border: var(--border-thick);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 28px;
+    animation: fadeDown 0.4s 0.1s ease both;
+  }
+  .panel-titlebar {
+    background: var(--crimson);
+    color: white;
+    padding: 10px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .budget-body {
+    padding: 22px 28px 16px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .budget-nums { display: flex; align-items: baseline; gap: 8px; }
+  .budget-used {
+    font-family: 'Fraunces', serif;
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+  .budget-used.over { color: var(--crimson-light); }
+  .budget-sep { font-size: 2.5rem; color: var(--text-muted); }
+  .budget-total { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 700; color: var(--text-muted); line-height: 1; }
+  .budget-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-top: 4px; }
+  .budget-bar-wrap { flex: 1; min-width: 180px; }
+  .budget-bar-bg { height: 22px; background: rgba(255,255,255,0.04); border: var(--border); overflow: hidden; }
+  .budget-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--crimson) 0%, var(--gold) 100%);
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+  .budget-bar-fill.over { background: var(--crimson-light); }
+  .bar-labels { display: flex; justify-content: space-between; margin-top: 4px; }
+  .bar-lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); }
+  .over-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--crimson-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: none;
+  }
+  .over-msg.show { display: inline; }
+
+  /* Resets */
+  .resets-row {
+    padding: 0 28px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .resets-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+  .reset-pips { display: flex; gap: 8px; }
+  .reset-pip {
+    width: 34px;
+    height: 34px;
+    border: var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .reset-pip:hover { border-color: var(--gold); color: var(--gold); transform: translate(-1px,-1px); box-shadow: var(--shadow-sm); }
+  .reset-pip.active { background: var(--gold); color: #0c0810; border-color: var(--gold-dark); font-weight: 700; }
+  .resets-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* ── Pact Grid ── */
+  .pacts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .pact-col {
+    background: var(--card);
+    border: var(--border-thick);
+    box-shadow: var(--shadow);
+    animation: fadeDown 0.4s 0.15s ease both;
+  }
+  .pact-col-header {
+    padding: 11px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pact-col-header.melee { background: var(--melee); }
+  .pact-col-header.ranged { background: var(--ranged); }
+  .pact-col-header.magic { background: var(--magic); }
+  .pact-col-pts { margin-left: auto; background: rgba(0,0,0,0.3); padding: 2px 9px; border-radius: 0; font-size: 11px; }
+  .pact-col-body { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+
+  /* Pact Node */
+  .pact-node {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 13px;
+    background: rgba(255,255,255,0.025);
+    border: 2px solid rgba(255,255,255,0.055);
+    cursor: pointer;
+    transition: all 0.14s ease;
+    user-select: none;
+  }
+  .pact-node:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); transform: translateX(3px); }
+  .pact-node.sel-melee  { background: var(--melee-bg);  border-color: var(--melee);  }
+  .pact-node.sel-ranged { background: var(--ranged-bg); border-color: var(--ranged); }
+  .pact-node.sel-fire   { background: var(--fire-bg);   border-color: var(--fire);   }
+  .pact-node.sel-earth  { background: var(--earth-bg);  border-color: var(--earth);  }
+  .pact-node.sel-air    { background: var(--air-bg);    border-color: var(--air);    }
+  .pact-node.sel-water  { background: var(--water-bg);  border-color: var(--water);  }
+  .pact-chk {
+    width: 20px; height: 20px;
+    border: 2px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0; margin-top: 2px;
+    transition: all 0.14s ease;
+  }
+  .pact-node[class*="sel-"] .pact-chk { background: var(--gold); border-color: var(--gold-dark); color: #0c0810; }
+  .pact-info { flex: 1; min-width: 0; }
+  .pact-name {
+    font-weight: 700;
+    font-size: 13.5px;
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .ks-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 5px;
+    border: 1px solid;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+  .ks-melee  { color: var(--melee);  border-color: var(--melee);  }
+  .ks-ranged { color: var(--ranged); border-color: var(--ranged); }
+  .ks-fire   { color: var(--fire);   border-color: var(--fire);   }
+  .ks-earth  { color: var(--earth);  border-color: var(--earth);  }
+  .ks-air    { color: var(--air);    border-color: var(--air);    }
+  .ks-water  { color: var(--water);  border-color: var(--water);  }
+  .pact-desc { font-size: 12px; color: var(--text-muted); margin-top: 3px; line-height: 1.45; }
+  .pact-cost { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); flex-shrink: 0; padding-top: 2px; }
+
+  /* Section divider inside col */
+  .col-divider {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    padding: 4px 0 2px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .col-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.06); }
+
+  /* Custom points stepper */
+  .custom-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px dashed rgba(255,255,255,0.08);
+  }
+  .custom-lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); flex: 1; }
+  .stepper { display: flex; align-items: center; gap: 6px; }
+  .step-btn {
+    width: 26px; height: 26px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text);
+    font-size: 15px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    transition: background 0.12s ease;
+  }
+  .step-btn:hover { background: rgba(255,255,255,0.1); }
+  .step-val { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--gold); min-width: 22px; text-align: center; }
+
+  /* ── Actions ── */
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    animation: fadeDown 0.4s 0.2s ease both;
+  }
+  .btn {
+    padding: 12px 28px;
+    border: var(--border);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.14s ease;
+  }
+  .btn:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0px rgba(0,0,0,0.7); }
+  .btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0px rgba(0,0,0,0.7); }
+  .btn-primary { background: var(--gold); color: #0c0810; border-color: var(--gold-dark); }
+  .btn-danger  { background: transparent; color: var(--crimson-light); border-color: var(--crimson); }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 28px;
+    text-align: center;
+    animation: fadeDown 0.4s 0.25s ease both;
+  }
+  .footer-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .footer-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    border-bottom: 2px solid var(--gold-dark);
+    padding-bottom: 2px;
+    transition: all 0.14s ease;
+  }
+  .footer-link:hover { opacity: 0.8; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .container { padding: 28px 14px 60px; }
+    .pacts-grid { grid-template-columns: 1fr; }
+    .budget-used { font-size: 3.2rem; }
+    .budget-total { font-size: 2rem; }
+    .budget-body { gap: 14px; }
+    .deco-skull { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div class="container">
+
+  <header>
+    <div class="league-badge">⚔ Leagues VI &mdash; 15 Apr &ndash; 10 Jun 2026</div>
+    <h1>
+      <span class="t-main">DEMONIC</span>
+      <span class="t-red">PACTS</span>
+      <span class="t-gold">Planner</span>
+    </h1>
+    <p class="header-desc">Plan your pact build for OSRS Leagues VI. Track your 40 pact points across Melee, Ranged, and Magic — plus your 3 echo boss resets.</p>
+    <div class="deco-skull">☠</div>
+  </header>
+
+  <!-- Countdown -->
+  <div class="countdown-panel">
+    <span class="countdown-label" id="cd-label">⏳ League starts in:</span>
+    <div class="countdown-units" id="cd-units"></div>
+  </div>
+
+  <!-- Budget -->
+  <div class="budget-panel">
+    <div class="panel-titlebar">
+      <span>Pact Point Budget</span>
+      <span class="over-msg" id="over-msg">⚠ Over budget!</span>
+    </div>
+    <div class="budget-body">
+      <div>
+        <div class="budget-nums">
+          <span class="budget-used" id="budget-used">0</span>
+          <span class="budget-sep">/</span>
+          <span class="budget-total">40</span>
+        </div>
+        <div class="budget-sub">Pact Points Allocated</div>
+      </div>
+      <div class="budget-bar-wrap">
+        <div class="budget-bar-bg">
+          <div class="budget-bar-fill" id="budget-bar"></div>
+        </div>
+        <div class="bar-labels">
+          <span class="bar-lbl">0</span>
+          <span class="bar-lbl">20</span>
+          <span class="bar-lbl">40</span>
+        </div>
+      </div>
+    </div>
+    <div class="resets-row">
+      <span class="resets-lbl">Echo Boss Resets:</span>
+      <div class="reset-pips">
+        <div class="reset-pip" id="r1" onclick="toggleReset(1)" title="Reset 1 (Echo Boss)">✦</div>
+        <div class="reset-pip" id="r2" onclick="toggleReset(2)" title="Reset 2 (Echo Boss)">✦</div>
+        <div class="reset-pip" id="r3" onclick="toggleReset(3)" title="Reset 3 (Echo Boss)">✦</div>
+      </div>
+      <span class="resets-status" id="reset-status">0 / 3 used</span>
+    </div>
+  </div>
+
+  <!-- Pact Columns -->
+  <div class="pacts-grid">
+
+    <!-- MELEE -->
+    <div class="pact-col">
+      <div class="pact-col-header melee">⚔ Melee <span class="pact-col-pts" id="pts-melee">0 pts</span></div>
+      <div class="pact-col-body" id="col-melee"></div>
+    </div>
+
+    <!-- RANGED -->
+    <div class="pact-col">
+      <div class="pact-col-header ranged">🏹 Ranged <span class="pact-col-pts" id="pts-ranged">0 pts</span></div>
+      <div class="pact-col-body" id="col-ranged"></div>
+    </div>
+
+    <!-- MAGIC -->
+    <div class="pact-col">
+      <div class="pact-col-header magic">🔮 Magic <span class="pact-col-pts" id="pts-magic">0 pts</span></div>
+      <div class="pact-col-body" id="col-magic"></div>
+    </div>
+
+  </div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <button class="btn btn-primary" id="btn-copy" onclick="copyBuild()">Copy Build Summary</button>
+    <button class="btn btn-danger" onclick="resetAll()">Reset All</button>
+  </div>
+
+  <footer>
+    <p class="footer-note">Keystones confirmed from official pre-launch overview. For the full 130+ node interactive tree:</p>
+    <a class="footer-link" href="https://oldschool.runescape.wiki/w/Demonic_Pacts_League/Demonic_Pacts" target="_blank" rel="noopener">OSRS Wiki — Demonic Pacts Full Tree &rarr;</a>
+  </footer>
+
+</div>
+
+<script>
+// ─── Pact data (keystones confirmed from official OSRS pre-launch sources) ───
+const PACTS = {
+  melee: [
+    {
+      id: 'm1', style: 'melee',
+      name: "Titan's Reach",
+      keystone: true,
+      desc: "Melee range is doubled whilst using two-handed weapons.",
+      cost: 1
+    },
+    {
+      id: 'm2', style: 'melee',
+      name: "Thorns",
+      keystone: true,
+      desc: "Deal passive damage while being tanky when a shield is equipped.",
+      cost: 1
+    },
+    { id: 'm-custom', style: 'melee', custom: true }
+  ],
+  ranged: [
+    {
+      id: 'r1', style: 'ranged',
+      name: "Swift Draw",
+      keystone: true,
+      desc: "Bows attack 1 tick faster.",
+      cost: 1
+    },
+    { id: 'r-custom', style: 'ranged', custom: true }
+  ],
+  magic: [
+    {
+      id: 'mg-fire', style: 'fire',
+      name: "Scorched Earth",
+      keystone: true,
+      desc: "Fire spells bounce to nearby targets and apply burns, dealing 6% of max health over time.",
+      cost: 1
+    },
+    {
+      id: 'mg-earth', style: 'earth',
+      name: "Tremor",
+      keystone: true,
+      desc: "Earth spells deal additional flat damage based on target's Defence level and reduce their Defence and Magic Defence.",
+      cost: 1
+    },
+    {
+      id: 'mg-air', style: 'air',
+      name: "Storm's Eye",
+      keystone: true,
+      desc: "+1% chance to max hit per 1 prayer bonus. Doubled against targets weak to air spells.",
+      cost: 1
+    },
+    {
+      id: 'mg-water', style: 'water',
+      name: "Tidal Flow",
+      keystone: true,
+      desc: "Healed for 1 HP per water rune regenerated by combat spells.",
+      cost: 1
+    },
+    { id: 'mg-custom', style: 'magic', custom: true }
+  ]
+};
+
+const state = {
+  selected: new Set(),
+  custom: { melee: 0, ranged: 0, magic: 0 },
+  resets: new Set()
+};
+
+// ─── Render ───────────────────────────────────────────────────────────────────
+function render() {
+  ['melee', 'ranged', 'magic'].forEach(col => {
+    const el = document.getElementById('col-' + col);
+    el.innerHTML = '';
+    PACTS[col].forEach(p => {
+      if (p.custom) {
+        el.appendChild(makeCustomRow(col));
+      } else {
+        if (col === 'magic') {
+          const div = document.createElement('div');
+          div.className = 'col-divider';
+          div.textContent = p.style;
+          el.appendChild(div);
+        }
+        el.appendChild(makeNode(p));
+      }
+    });
+  });
+  updateBudget();
+}
+
+function makeNode(p) {
+  const el = document.createElement('div');
+  const sel = state.selected.has(p.id);
+  el.className = 'pact-node' + (sel ? ' sel-' + p.style : '');
+  el.innerHTML =
+    `<div class="pact-chk">${sel ? '✓' : ''}</div>` +
+    `<div class="pact-info">` +
+      `<div class="pact-name">${p.name}` +
+        (p.keystone ? `<span class="ks-badge ks-${p.style}">Keystone</span>` : '') +
+      `</div>` +
+      `<div class="pact-desc">${p.desc}</div>` +
+    `</div>` +
+    `<div class="pact-cost">${p.cost}pt</div>`;
+  el.onclick = () => { toggle(p.id); render(); };
+  return el;
+}
+
+function makeCustomRow(col) {
+  const el = document.createElement('div');
+  el.className = 'custom-row';
+  el.innerHTML =
+    `<span class="custom-lbl">Other nodes</span>` +
+    `<div class="stepper">` +
+      `<button class="step-btn" onclick="adj('${col}',-1)">−</button>` +
+      `<span class="step-val" id="cv-${col}">${state.custom[col]}</span>` +
+      `<button class="step-btn" onclick="adj('${col}',1)">+</button>` +
+    `</div>`;
+  return el;
+}
+
+function toggle(id) {
+  state.selected.has(id) ? state.selected.delete(id) : state.selected.add(id);
+}
+
+function adj(col, d) {
+  state.custom[col] = Math.max(0, state.custom[col] + d);
+  document.getElementById('cv-' + col).textContent = state.custom[col];
+  updateBudget();
+}
+
+// ─── Budget ───────────────────────────────────────────────────────────────────
+function colTotal(col) {
+  let t = 0;
+  PACTS[col].forEach(p => { if (!p.custom && state.selected.has(p.id)) t += p.cost; });
+  return t + state.custom[col];
+}
+
+function totalUsed() {
+  return colTotal('melee') + colTotal('ranged') + colTotal('magic');
+}
+
+function updateBudget() {
+  const used = totalUsed();
+  const over = used > 40;
+  document.getElementById('budget-used').textContent = used;
+  document.getElementById('budget-used').classList.toggle('over', over);
+  document.getElementById('budget-bar').style.width = Math.min(100, (used / 40) * 100) + '%';
+  document.getElementById('budget-bar').classList.toggle('over', over);
+  document.getElementById('over-msg').classList.toggle('show', over);
+  ['melee', 'ranged', 'magic'].forEach(c => {
+    const t = colTotal(c);
+    document.getElementById('pts-' + c).textContent = t + (t === 1 ? ' pt' : ' pts');
+  });
+}
+
+// ─── Resets ───────────────────────────────────────────────────────────────────
+function toggleReset(n) {
+  const pip = document.getElementById('r' + n);
+  state.resets.has(n) ? state.resets.delete(n) : state.resets.add(n);
+  pip.classList.toggle('active', state.resets.has(n));
+  const c = state.resets.size;
+  document.getElementById('reset-status').textContent =
+    c + ' / 3 used' + (c === 3 ? ' (max)' : '');
+}
+
+// ─── Copy build ───────────────────────────────────────────────────────────────
+function copyBuild() {
+  const lines = ['── Demonic Pacts Build ──', ''];
+  ['melee', 'ranged', 'magic'].forEach(col => {
+    const nodes = PACTS[col].filter(p => !p.custom && state.selected.has(p.id));
+    const cx = state.custom[col];
+    if (nodes.length || cx) {
+      lines.push(col.toUpperCase() + ':');
+      nodes.forEach(p => lines.push('  ✓ ' + p.name));
+      if (cx) lines.push('  + ' + cx + ' other node' + (cx > 1 ? 's' : ''));
+      lines.push('');
+    }
+  });
+  lines.push('Total: ' + totalUsed() + ' / 40 pact points');
+  lines.push('Resets used: ' + state.resets.size + ' / 3');
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const btn = document.getElementById('btn-copy');
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+// ─── Reset all ────────────────────────────────────────────────────────────────
+function resetAll() {
+  state.selected.clear();
+  state.custom = { melee: 0, ranged: 0, magic: 0 };
+  state.resets.clear();
+  [1,2,3].forEach(n => document.getElementById('r'+n).classList.remove('active'));
+  document.getElementById('reset-status').textContent = '0 / 3 used';
+  render();
+}
+
+// ─── Countdown ────────────────────────────────────────────────────────────────
+const START = new Date('2026-04-15T00:00:00Z').getTime();
+const END   = new Date('2026-06-10T00:00:00Z').getTime();
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function updateCountdown() {
+  const now = Date.now();
+  const lbl = document.getElementById('cd-label');
+  const units = document.getElementById('cd-units');
+
+  if (now >= END) {
+    lbl.textContent = 'League has ended.';
+    units.innerHTML = '';
+    return;
+  }
+
+  const diff = now >= START ? END - now : START - now;
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+
+  if (now >= START) {
+    lbl.innerHTML = '<span class="live-badge"><span class="dot"></span>League is LIVE &mdash; ends in:</span>';
+  } else {
+    lbl.textContent = '⏳ League starts in:';
+  }
+
+  units.innerHTML = [
+    { v: d, l: 'days' }, { v: h, l: 'hrs' },
+    { v: m, l: 'min'  }, { v: s, l: 'sec' }
+  ].map(u =>
+    `<div class="cd-unit"><span class="cd-num">${pad(u.v)}</span><span class="cd-lbl">${u.l}</span></div>`
+  ).join('');
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+render();
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
