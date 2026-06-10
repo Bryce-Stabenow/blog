@@ -1,0 +1,16 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/header.astro";
+import DePlannerApp from "../../components/de-planner/DePlannerApp.vue";
+---
+
+<Layout title="De-Planner" activeLink="Tools">
+    <Header
+        title="De-Planner"
+        subtitle="Free-flowing dependency charts for plans you may or may not follow"
+    />
+
+    <div class="w-full mt-4">
+        <DePlannerApp client:only="vue" />
+    </div>
+</Layout>
