@@ -35,10 +35,11 @@ function onPointerDown(e: PointerEvent) {
     const t = e.target as HTMLElement;
     if (t.closest("input, textarea, button, .dp-handle")) return;
     e.stopPropagation();
-    try {
-        root.value!.setPointerCapture(e.pointerId);
-    } catch {
-        // pointer already gone — drag still works via bubbled moves
+    // Don't capture here: capture retargets the upcoming click/dblclick to this
+    // element, which would stop double-clicks from ever reaching the inline-edit
+    // fields. Touch sets an implicit capture on pointerdown — release it.
+    if (root.value!.hasPointerCapture(e.pointerId)) {
+        root.value!.releasePointerCapture(e.pointerId);
     }
     drag = {
         pointerId: e.pointerId,
@@ -54,7 +55,16 @@ function onPointerMove(e: PointerEvent) {
     if (!drag || e.pointerId !== drag.pointerId) return;
     const dx = e.clientX - drag.startX;
     const dy = e.clientY - drag.startY;
-    if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 4) drag.moved = true;
+    if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 4) {
+        drag.moved = true;
+        // Now it's a real drag, not a (double-)click — safe to capture so the
+        // node keeps tracking even when the pointer outruns it
+        try {
+            root.value!.setPointerCapture(e.pointerId);
+        } catch {
+            // pointer already gone — drag still works via bubbled moves
+        }
+    }
     if (drag.moved) {
         // Screen deltas must be divided by zoom to stay under the cursor
         store.moveNode(
