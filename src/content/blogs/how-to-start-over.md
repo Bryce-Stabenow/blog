@@ -199,4 +199,4 @@ If you __do__ pass the checklist and decide on a rewrite, make sure to first tak
 <br>
 <br>
 
-Until next time, peace.
+Until next time.

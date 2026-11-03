@@ -30,7 +30,7 @@ const { post } = Astro.props;
       <h3 class="text-2xl sm:text-2xl font-bold text-right">
         {post.data.title}
       </h3>
-      <p class="text-right">{post.data.pubDate.toDateString()}</p>
+      <p class="text-right">{post.data.pubDate.toLocaleDateString('en-US', {day: "2-digit", month: "short", year: "numeric"})}</p>
     </div>
   </a>
 </li>

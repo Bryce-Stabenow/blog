@@ -10,4 +10,4 @@ tags: []
 ---
 # Title here
 
-Until next time, peace.
+Until next time.

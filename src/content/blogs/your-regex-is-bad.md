@@ -90,4 +90,4 @@ Good luck with your future regex issues.
 
 <br/>
 
-Until next time, peace.
+Until next time.

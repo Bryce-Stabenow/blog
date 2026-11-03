@@ -72,4 +72,4 @@ After this, you should be ready to run `docker compose up` and have your project
 
 <br>
 
-Until next time, peace.
+Until next time.

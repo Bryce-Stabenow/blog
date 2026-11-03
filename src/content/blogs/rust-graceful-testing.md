@@ -73,4 +73,4 @@ Nice! Now we can test for a panic while making sure that we are keeping that cod
 
 <br/>
 
-Until next time, peace.
+Until next time.

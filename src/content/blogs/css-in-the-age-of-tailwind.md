@@ -167,4 +167,4 @@ There's something special about those old sites of the early 2000's, and I refus
 
 <br/>
 
-Until next time, peace.
+Until next time.

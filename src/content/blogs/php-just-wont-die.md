@@ -57,4 +57,4 @@ I'd also like to give a special shout out to the 32% of people last year that do
 
 <br>
 
-Until next time, peace & long live Laravel.
+Until next time & long live Laravel.

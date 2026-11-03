@@ -129,4 +129,4 @@ There are pretty sophisticated tools out there for detecting AI images, like [De
 
 <br>
 
-Until next time, peace.
+Until next time.

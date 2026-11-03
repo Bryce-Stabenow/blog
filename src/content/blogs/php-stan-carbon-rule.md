@@ -200,4 +200,4 @@ I also recommend spending some time writing a compiler. [I recently completed on
 
 <br/>
 
-Until next time, peace.
+Until next time.

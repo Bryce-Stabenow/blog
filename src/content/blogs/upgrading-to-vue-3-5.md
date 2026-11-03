@@ -127,4 +127,4 @@ So, there you have it. Vue has some great new features available now for you to 
 
 <br/>
 
-Until next time, peace
+Until next time
